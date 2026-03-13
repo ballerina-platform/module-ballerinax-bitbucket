@@ -5,7 +5,7 @@ name = "bitbucket"
 version = "@toml.version@"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = [] # TODO: Add keywords
+keywords = ["IT Operations/Source Control", "Cost/Freemium", "Vendor/Atlassian", "Area/Developer Tools", "Type/Connector"] # TODO: Add keywords
 # icon = "icon.png" # TODO: Add icon
 repository = "https://github.com/ballerina-platform/module-ballerinax-bitbucket"
 
