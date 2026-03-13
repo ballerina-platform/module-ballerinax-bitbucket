@@ -4,6 +4,16 @@ Bitbucket is a Git-based source code repository hosting service owned by Atlassi
 
 ### Key Features
 
+- Repository management and configuration
+- Pull request operations and management
+- Workspace and project administration
+- User and group access control
+- Support for various Git-based operations
+- GraalVM compatible for native image builds
+
+Bitbucket is a Git-based source code repository hosting service owned by Atlassian. The Bitbucket connector provides an API to interact with Bitbucket, allowing you to manage repositories, pull requests, and other project resources programmatically.
+
+
 - Repository management and configuration\n- Pull request operations and management\n- Workspace and project administration\n- User and group access control\n- Support for various Git-based operations\n- GraalVM compatible for native image builds
 
 
