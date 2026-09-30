@@ -5,7 +5,7 @@ Finds the most recent commit of a repository, tags it as a release when `publish
 ## Prerequisites
 
 - Ballerina Swan Lake 2201.12.0 or later
-- A Bitbucket Cloud access token with repository and pull request scopes
+- A Bitbucket Cloud access token with repository read permission, plus repository write permission when `publishTag` is enabled
 - Create a `Config.toml` in this directory:
 
   ```toml

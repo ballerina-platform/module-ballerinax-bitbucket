@@ -26,7 +26,7 @@ To use the connector you need a Bitbucket Cloud account and one of the supported
 1. Sign in to [Bitbucket Cloud](https://bitbucket.org/) and open the workspace, project or repository you want to automate.
 2. Create an access token. Open the repository (or workspace) **Settings**, choose **Access tokens** and create a token with the scopes your integration needs, such as repository read and write, and pull request read and write.
 3. Copy the token. It is shown only once.
-4. Alternatively, authenticate with your Bitbucket username and an app password, or with an OAuth 2.0 consumer created under **Workspace settings > OAuth consumers**.
+4. Alternatively, use basic authentication with your Atlassian account email and an API token created under **Atlassian account settings > Security > API tokens**, or an OAuth 2.0 consumer created under **Workspace settings > OAuth consumers**.
 5. Keep the credentials in a `Config.toml` file next to your program and never commit them to source control.
 
 ## Quickstart
