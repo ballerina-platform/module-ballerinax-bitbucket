@@ -2,13 +2,13 @@
 
 The `ballerinax/bitbucket` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. [Pull request review flow](./pull_request_review_flow/pull_request_review_flow.md) - Review the open pull requests of a repository, then approve and merge one.
+2. [Release tag publishing](./release_tag_publishing/release_tag_publishing.md) - Tag the latest commit of a repository as a release and list the repository tags.
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+* Ballerina Swan Lake 2201.12.0 or later.
+* A Bitbucket Cloud access token. Each example reads it, along with the workspace and repository, from a `Config.toml` file placed in the example directory.
 
 ## Running an example
 

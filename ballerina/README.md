@@ -10,6 +10,15 @@
 
 The Bitbucket connector lets Ballerina integrations work with [Bitbucket Cloud](https://bitbucket.org/), Atlassian's Git repository hosting and collaboration service, through version 2.0 of its REST API. It covers the API's full operation surface, including repositories, branches and tags, commits, pull requests, pipelines, snippets, projects, workspaces and permissions, so that source-control and CI/CD workflows can be automated from a Ballerina program.
 
+### Key features
+
+* Create, update and delete repositories, branches, tags and branch restriction rules.
+* Open, review, approve and merge pull requests, and read their activity and comments.
+* Browse commits, diffs, source files and commit statuses.
+* Manage Bitbucket Pipelines, including variables, schedules, runners and caches.
+* Administer workspaces, projects, members and permissions.
+* Share code with snippets and manage SSH and GPG keys.
+
 ## Setup guide
 
 To use the connector you need a Bitbucket Cloud account and one of the supported credentials.
@@ -54,8 +63,8 @@ To use the connector you need a Bitbucket Cloud account and one of the supported
 
 The `Bitbucket` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-bitbucket/tree/main/examples/), covering the following use cases:
 
-* [pull_request_review_flow](examples/pull_request_review_flow/pull_request_review_flow.md) - Review the open pull requests of a repository, then approve and merge one.
-* [release_tag_publishing](examples/release_tag_publishing/release_tag_publishing.md) - Tag the latest commit of a repository as a release and list the repository tags.
+* [pull_request_review_flow](../examples/pull_request_review_flow/pull_request_review_flow.md) - Review the open pull requests of a repository, then approve and merge one.
+* [release_tag_publishing](../examples/release_tag_publishing/release_tag_publishing.md) - Tag the latest commit of a repository as a release and list the repository tags.
 
 ## Build from the source
 
