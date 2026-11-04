@@ -1,6 +1,6 @@
 _Author_:  @DimuthuMadushan \
 _Created_: 2026/09/30 \
-_Updated_: 2026/09/30 \
+_Updated_: 2026/11/04 \
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
@@ -11,7 +11,7 @@ These changes are done in order to improve the overall usability, and as workaro
 
 1. Add a top-level `security` requirement.
 
-   The specification declares the `basic`, `oauth2` and `api_key` security schemes but no top-level `security`, so the generator emitted a client without `auth`. The three schemes are now listed as alternative requirements.
+   The specification declares the `basic`, `oauth2` and `api_key` security schemes but no top-level `security`, so the generator emitted a client without `auth`. The three schemes are now listed as alternative requirements. This change was made in the original specification.
 
 2. Assign operationIds.
 
@@ -19,19 +19,27 @@ These changes are done in order to improve the overall usability, and as workaro
 
 3. Make operation summaries unique.
 
-   Five summaries were shared by two operations (default reviewer, pull request activity log, pipeline variable creation). They now name the repository, project, team or user they apply to.
+   Five summaries were shared by two operations (default reviewer, pull request activity log, pipeline variable creation). They now name the repository, project, team or user they apply to. This change was made in the original specification.
 
 4. Rename inline object titles that contain spaces.
 
-   The inline schemas titled `Rendered Pull Request Markup` and `Pull Request Commit` produced invalid identifiers (`Rendered\ Pull\ Request\ Markup`). Their titles are now `RenderedPullRequestMarkup` and `PullRequestCommit`.
+   The inline schemas titled `Rendered Pull Request Markup` and `Pull Request Commit` produced invalid identifiers (`Rendered\ Pull\ Request\ Markup`). Their titles are now `RenderedPullRequestMarkup` and `PullRequestCommit`. This change was made in the original specification.
 
 5. Rename schemas.
 
    The generic `Object` schema is now `GenericObject`, the two `BitbucketAppsPermissionsSerializers...UpdateSchema` schemas are `ProjectPermissionUpdate` and `RepoPermissionUpdate`, and `ErrorError`, `GPGAccountKey` and `Branchrestriction` are `ErrorDetail`, `GpgAccountKey` and `BranchRestriction`.
 
-6. Add descriptions for the request bodies of `POST /repositories/{workspace}/{repoSlug}/pullrequests/{pullRequestId}/merge` and `POST /repositories/{workspace}/{repoSlug}/refs/tags`.
+6. Add descriptions for the request bodies of `POST /repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge` and `POST /repositories/{workspace}/{repo_slug}/refs/tags`. This change was made in the original specification.
 
-Items 1, 3 and 4 are re-applied by `docs/spec/fix_aligned.py` on the aligned specification.
+7. Fill missing property, response and request body descriptions.
+
+   The generated records had `undocumented field` warnings wherever a schema property had no description, and some operations had blank response or request body descriptions. Descriptions were added to 194 properties, 4 responses and 4 request bodies, and each bare `$ref` property that gained one was wrapped as `allOf: [{$ref}]` plus `description` (94 properties). Existing descriptions were left unchanged. This change was made in the original specification with `tooling/apply_descriptions.py`.
+
+   Flatten merges inline objects that are identical into one schema, so every copy in a merged group has the same description. The `links` objects of `project_group_permission`, `project_user_permission`, `repository_group_permission` and `repository_user_permission` read "Hypermedia links related to the permission.", and `subject_types.repository` and `subject_types.workspace` read "Event types available for this subject type." With different texts they generate separate record types (`ProjectUserPermissionLinks`, `SubjectTypesWorkspace`, …).
+
+8. Describe the remaining fields of inline objects.
+
+   Seventeen fields of inline objects still had no description: the branching-model `branch`, the commit `hash`, the pull request branch `name`, the rendered pull request `title`, `description` and `reason`, the `subject_types` event `links`, the repository `clone` links, the pipeline schedule target `selector`, and the `href` and `name` of every inline link object. They were described in the original specification with `tooling/apply_descriptions.py`. Every inline link object's `href` and `name` gets the same text ("URL of the linked resource.", "Display name of the linked resource."), as do the three rendered pull request fields, so identical objects still generate a single record type.
 
 ## OpenAPI cli command
 

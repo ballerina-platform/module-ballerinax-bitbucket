@@ -8,5 +8,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Bitbucket Cloud REST API 2.0 client covering the full operation surface (294 operations) as remote methods.
+- Bitbucket Cloud REST API 2.0 client covering the full operation surface as remote methods.
 - Basic, bearer token, API key and OAuth 2.0 refresh token authentication.

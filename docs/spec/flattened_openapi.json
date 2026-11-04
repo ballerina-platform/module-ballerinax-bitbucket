@@ -14,6 +14,13 @@
   "servers" : [ {
     "url" : "https://api.bitbucket.org/2.0"
   } ],
+  "security" : [ {
+    "basic" : [ ]
+  }, {
+    "oauth2" : [ ]
+  }, {
+    "api_key" : [ ]
+  } ],
   "tags" : [ {
     "name" : "Addon",
     "description" : "The addon resource is intended to use used by Bitbucket Cloud Connect\nApps, and only supports JWT authentication.\n"
@@ -1048,7 +1055,7 @@
         "description" : "Deletes an existing branch restriction rule.",
         "responses" : {
           "204" : {
-            "description" : ""
+            "description" : "Success"
           },
           "401" : {
             "description" : "If the request was not authenticated",
@@ -3733,7 +3740,7 @@
     "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}" : {
       "get" : {
         "tags" : [ "Pullrequests" ],
-        "summary" : "Get a default reviewer",
+        "summary" : "Get a repository default reviewer",
         "description" : "Returns the specified reviewer.\n\nThis can be used to test whether a user is among the repository's\ndefault reviewers list. A 404 indicates that that specified user is not\na default reviewer.",
         "responses" : {
           "200" : {
@@ -8603,7 +8610,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "The step.",
+            "description" : "The step",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -11087,7 +11094,7 @@
     "/repositories/{workspace}/{repo_slug}/pullrequests/activity" : {
       "get" : {
         "tags" : [ "Pullrequests" ],
-        "summary" : "List a pull request activity log",
+        "summary" : "List pull request activity log for a repository",
         "description" : "Returns a paginated list of the pull request's activity log.\n\nThis handler serves both a v20 and internal endpoint. The v20 endpoint\nreturns reviewer comments, updates, approvals and request changes. The internal\nendpoint includes those plus tasks and attachments.\n\nComments created on a file or a line of code have an inline property.\n\nComment example:\n```\n{\n    \"pagelen\": 20,\n    \"values\": [\n        {\n            \"comment\": {\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695/comments/118571088\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695/_/diff#comment-118571088\"\n                    }\n                },\n                \"deleted\": false,\n                \"pullrequest\": {\n                    \"type\": \"pullrequest\",\n                    \"id\": 5695,\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                        }\n                    },\n                    \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n                },\n                \"content\": {\n                    \"raw\": \"inline with to a dn from lines\",\n                    \"markup\": \"markdown\",\n                    \"html\": \"<p>inline with to a dn from lines</p>\",\n                    \"type\": \"rendered\"\n                },\n                \"created_on\": \"2019-09-27T00:33:46.039178+00:00\",\n                \"user\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                },\n                \"created_on\": \"2019-09-27T00:33:46.039178+00:00\",\n                \"user\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                },\n                \"updated_on\": \"2019-09-27T00:33:46.055384+00:00\",\n                \"inline\": {\n                    \"context_lines\": \"\",\n                    \"to\": null,\n                    \"path\": \"\",\n                    \"outdated\": false,\n                    \"from\": 211\n                },\n                \"type\": \"pullrequest_comment\",\n                \"id\": 118571088\n            },\n            \"pull_request\": {\n                \"type\": \"pullrequest\",\n                \"id\": 5695,\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                    }\n                },\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n            }\n        }\n    ]\n}\n```\n\nUpdates include a state property of OPEN, MERGED, or DECLINED.\n\nUpdate example:\n```\n{\n    \"pagelen\": 20,\n    \"values\": [\n        {\n            \"update\": {\n                \"description\": \"\",\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\",\n                \"destination\": {\n                    \"commit\": {\n                        \"type\": \"commit\",\n                        \"hash\": \"6a2c16e4a152\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/commit/6a2c16e4a152\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/commits/6a2c16e4a152\"\n                            }\n                        }\n                    },\n                    \"branch\": {\n                        \"name\": \"master\"\n                    },\n                    \"repository\": {\n                        \"name\": \"Atlaskit-MK-2\",\n                        \"type\": \"repository\",\n                        \"full_name\": \"atlassian/atlaskit-mk-2\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2\"\n                            },\n                            \"avatar\": {\n                                \"href\": \"https://bytebucket.org/ravatar/%7B%7D?ts=js\"\n                            }\n                        },\n                        \"uuid\": \"{}\"\n                    }\n                },\n                \"reason\": \"\",\n                \"source\": {\n                    \"commit\": {\n                        \"type\": \"commit\",\n                        \"hash\": \"728c8bad1813\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/commit/728c8bad1813\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/commits/728c8bad1813\"\n                            }\n                        }\n                    },\n                    \"branch\": {\n                        \"name\": \"username/NONE-add-onClick-prop-for-accessibility\"\n                    },\n                    \"repository\": {\n                        \"name\": \"Atlaskit-MK-2\",\n                        \"type\": \"repository\",\n                        \"full_name\": \"atlassian/atlaskit-mk-2\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2\"\n                            },\n                            \"avatar\": {\n                                \"href\": \"https://bytebucket.org/ravatar/%7B%7D?ts=js\"\n                            }\n                        },\n                        \"uuid\": \"{}\"\n                    }\n                },\n                \"state\": \"OPEN\",\n                \"author\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                },\n                \"date\": \"2019-05-10T06:48:25.305565+00:00\"\n            },\n            \"pull_request\": {\n                \"type\": \"pullrequest\",\n                \"id\": 5695,\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                    }\n                },\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n            }\n        }\n    ]\n}\n```\n\nApproval example:\n```\n{\n    \"pagelen\": 20,\n    \"values\": [\n        {\n            \"approval\": {\n                \"date\": \"2019-09-27T00:37:19.849534+00:00\",\n                \"pullrequest\": {\n                    \"type\": \"pullrequest\",\n                    \"id\": 5695,\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                        }\n                    },\n                    \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n                },\n                \"user\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                }\n            },\n            \"pull_request\": {\n                \"type\": \"pullrequest\",\n                \"id\": 5695,\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                    }\n                },\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n            }\n        }\n    ]\n}\n```",
         "responses" : {
           "200" : {
@@ -11292,7 +11299,7 @@
     "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity" : {
       "get" : {
         "tags" : [ "Pullrequests" ],
-        "summary" : "List a pull request activity log",
+        "summary" : "List activity log for a pull request",
         "description" : "Returns a paginated list of the pull request's activity log.\n\nThis handler serves both a v20 and internal endpoint. The v20 endpoint\nreturns reviewer comments, updates, approvals and request changes. The internal\nendpoint includes those plus tasks and attachments.\n\nComments created on a file or a line of code have an inline property.\n\nComment example:\n```\n{\n    \"pagelen\": 20,\n    \"values\": [\n        {\n            \"comment\": {\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695/comments/118571088\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695/_/diff#comment-118571088\"\n                    }\n                },\n                \"deleted\": false,\n                \"pullrequest\": {\n                    \"type\": \"pullrequest\",\n                    \"id\": 5695,\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                        }\n                    },\n                    \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n                },\n                \"content\": {\n                    \"raw\": \"inline with to a dn from lines\",\n                    \"markup\": \"markdown\",\n                    \"html\": \"<p>inline with to a dn from lines</p>\",\n                    \"type\": \"rendered\"\n                },\n                \"created_on\": \"2019-09-27T00:33:46.039178+00:00\",\n                \"user\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                },\n                \"created_on\": \"2019-09-27T00:33:46.039178+00:00\",\n                \"user\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                },\n                \"updated_on\": \"2019-09-27T00:33:46.055384+00:00\",\n                \"inline\": {\n                    \"context_lines\": \"\",\n                    \"to\": null,\n                    \"path\": \"\",\n                    \"outdated\": false,\n                    \"from\": 211\n                },\n                \"type\": \"pullrequest_comment\",\n                \"id\": 118571088\n            },\n            \"pull_request\": {\n                \"type\": \"pullrequest\",\n                \"id\": 5695,\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                    }\n                },\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n            }\n        }\n    ]\n}\n```\n\nUpdates include a state property of OPEN, MERGED, or DECLINED.\n\nUpdate example:\n```\n{\n    \"pagelen\": 20,\n    \"values\": [\n        {\n            \"update\": {\n                \"description\": \"\",\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\",\n                \"destination\": {\n                    \"commit\": {\n                        \"type\": \"commit\",\n                        \"hash\": \"6a2c16e4a152\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/commit/6a2c16e4a152\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/commits/6a2c16e4a152\"\n                            }\n                        }\n                    },\n                    \"branch\": {\n                        \"name\": \"master\"\n                    },\n                    \"repository\": {\n                        \"name\": \"Atlaskit-MK-2\",\n                        \"type\": \"repository\",\n                        \"full_name\": \"atlassian/atlaskit-mk-2\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2\"\n                            },\n                            \"avatar\": {\n                                \"href\": \"https://bytebucket.org/ravatar/%7B%7D?ts=js\"\n                            }\n                        },\n                        \"uuid\": \"{}\"\n                    }\n                },\n                \"reason\": \"\",\n                \"source\": {\n                    \"commit\": {\n                        \"type\": \"commit\",\n                        \"hash\": \"728c8bad1813\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/commit/728c8bad1813\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/commits/728c8bad1813\"\n                            }\n                        }\n                    },\n                    \"branch\": {\n                        \"name\": \"username/NONE-add-onClick-prop-for-accessibility\"\n                    },\n                    \"repository\": {\n                        \"name\": \"Atlaskit-MK-2\",\n                        \"type\": \"repository\",\n                        \"full_name\": \"atlassian/atlaskit-mk-2\",\n                        \"links\": {\n                            \"self\": {\n                                \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2\"\n                            },\n                            \"html\": {\n                                \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2\"\n                            },\n                            \"avatar\": {\n                                \"href\": \"https://bytebucket.org/ravatar/%7B%7D?ts=js\"\n                            }\n                        },\n                        \"uuid\": \"{}\"\n                    }\n                },\n                \"state\": \"OPEN\",\n                \"author\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                },\n                \"date\": \"2019-05-10T06:48:25.305565+00:00\"\n            },\n            \"pull_request\": {\n                \"type\": \"pullrequest\",\n                \"id\": 5695,\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                    }\n                },\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n            }\n        }\n    ]\n}\n```\n\nApproval example:\n```\n{\n    \"pagelen\": 20,\n    \"values\": [\n        {\n            \"approval\": {\n                \"date\": \"2019-09-27T00:37:19.849534+00:00\",\n                \"pullrequest\": {\n                    \"type\": \"pullrequest\",\n                    \"id\": 5695,\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                        }\n                    },\n                    \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n                },\n                \"user\": {\n                    \"display_name\": \"Name Lastname\",\n                    \"uuid\": \"{}\",\n                    \"links\": {\n                        \"self\": {\n                            \"href\": \"https://api.bitbucket.org/2.0/users/%7B%7D\"\n                        },\n                        \"html\": {\n                            \"href\": \"https://bitbucket.org/%7B%7D/\"\n                        },\n                        \"avatar\": {\n                            \"href\": \"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/:/128\"\n                        }\n                    },\n                    \"type\": \"user\",\n                    \"nickname\": \"Name\",\n                    \"account_id\": \"\"\n                }\n            },\n            \"pull_request\": {\n                \"type\": \"pullrequest\",\n                \"id\": 5695,\n                \"links\": {\n                    \"self\": {\n                        \"href\": \"https://api.bitbucket.org/2.0/repositories/atlassian/atlaskit-mk-2/pullrequests/5695\"\n                    },\n                    \"html\": {\n                        \"href\": \"https://bitbucket.org/atlassian/atlaskit-mk-2/pull-requests/5695\"\n                    }\n                },\n                \"title\": \"username/NONE: small change from onFocus to onClick to handle tabbing through the page and not expand the editor unless a click event triggers it\"\n            }\n        }\n    ]\n}\n```",
         "responses" : {
           "200" : {
@@ -12327,6 +12334,7 @@
           }
         } ],
         "requestBody" : {
+          "description" : "Merge strategy, commit message and branch-closing options",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -13122,7 +13130,7 @@
         "description" : "Returns a specific pull request task.",
         "responses" : {
           "200" : {
-            "description" : "The task.",
+            "description" : "The task",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -14200,6 +14208,7 @@
         "summary" : "Create a tag",
         "description" : "Creates a new annotated tag in the specified repository.\n\nThe payload of the POST should consist of a JSON document that\ncontains the name of the tag and the target hash.\n\n```\ncurl https://api.bitbucket.org/2.0/repositories/jdoe/myrepo/refs/tags \\\n-s -u jdoe -X POST -H \"Content-Type: application/json\" \\\n-d '{\n    \"name\" : \"new-tag-name\",\n    \"target\" : {\n        \"hash\" : \"a1b2c3d4e5f6\",\n    }\n}'\n```\n\nThis endpoint does support using short hash prefixes for the commit\nhash, but it may return a 400 response if the provided prefix is\nambiguous. Using a full commit hash is the preferred approach.\n\nA message for the tag object may optionally be provided. If it is\nomitted or the provided message is empty, a default message of\n\"Added tag <tagname> for changeset <shorthash>\" will be used.",
         "requestBody" : {
+          "description" : "Name and target commit of the tag to create",
           "content" : {
             "application/json" : {
               "schema" : {
@@ -14503,7 +14512,7 @@
         } ],
         "responses" : {
           "201" : {
-            "description" : "\n"
+            "description" : "Success"
           },
           "403" : {
             "description" : "If the authenticated user does not have write or admin access",
@@ -16626,7 +16635,7 @@
       },
       "post" : {
         "tags" : [ "Pipelines" ],
-        "summary" : "Create a variable for a user",
+        "summary" : "Create a variable for a team",
         "description" : "Create an account level variable.\nThis endpoint has been deprecated, and you should use the new workspaces endpoint. For more information, see [the announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-teams-deprecation/).",
         "operationId" : "createPipelineVariableForTeam",
         "parameters" : [ {
@@ -21155,7 +21164,7 @@
     "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}" : {
       "get" : {
         "tags" : [ "Projects" ],
-        "summary" : "Get a default reviewer",
+        "summary" : "Get a project default reviewer",
         "description" : "Returns the specified default reviewer.",
         "responses" : {
           "200" : {
@@ -22849,13 +22858,18 @@
               "enum" : [ "repository", "workspace" ]
             },
             "subject" : {
-              "$ref" : "#/components/schemas/object"
+              "description" : "The subject of the webhook subscription.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/object"
+              } ]
             },
             "active" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the webhook subscription has active."
             },
             "created_at" : {
               "type" : "string",
+              "description" : "Timestamp of the created at of the webhook subscription.",
               "format" : "date-time"
             },
             "events" : {
@@ -22916,6 +22930,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of webhook subscription objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/webhook_subscription"
             }
@@ -22996,6 +23011,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of hook event objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/hook_event"
             }
@@ -23010,6 +23026,7 @@
         "properties" : {
           "_attributes" : {
             "type" : "array",
+            "description" : "List of attributes of the application property.",
             "items" : {
               "type" : "string",
               "enum" : [ "public", "read_only" ]
@@ -23101,7 +23118,10 @@
               "format" : "uri"
             },
             "commit" : {
-              "$ref" : "#/components/schemas/commit"
+              "description" : "The commit of the deployment release.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/commit"
+              } ]
             },
             "created_on" : {
               "type" : "string",
@@ -23125,13 +23145,22 @@
               "description" : "The UUID identifying the deployment."
             },
             "state" : {
-              "$ref" : "#/components/schemas/deployment_state"
+              "description" : "The state of the deployment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/deployment_state"
+              } ]
             },
             "environment" : {
-              "$ref" : "#/components/schemas/deployment_environment"
+              "description" : "The environment of the deployment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/deployment_environment"
+              } ]
             },
             "release" : {
-              "$ref" : "#/components/schemas/deployment_release"
+              "description" : "The release of the deployment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/deployment_release"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -23647,7 +23676,10 @@
               "description" : "Whether Pipelines is enabled for the repository."
             },
             "repository" : {
-              "$ref" : "#/components/schemas/repository"
+              "description" : "The repository of the pipelines config.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/repository"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -23670,19 +23702,34 @@
               "description" : "The build number of the pipeline."
             },
             "creator" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The creator of the pipeline.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "repository" : {
-              "$ref" : "#/components/schemas/repository"
+              "description" : "The repository of the pipeline.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/repository"
+              } ]
             },
             "target" : {
-              "$ref" : "#/components/schemas/pipeline_target"
+              "description" : "The target of the pipeline.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_target"
+              } ]
             },
             "trigger" : {
-              "$ref" : "#/components/schemas/pipeline_trigger"
+              "description" : "The trigger of the pipeline.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_trigger"
+              } ]
             },
             "state" : {
-              "$ref" : "#/components/schemas/pipeline_state"
+              "description" : "The state of the pipeline.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_state"
+              } ]
             },
             "variables" : {
               "minItems" : 0,
@@ -23715,7 +23762,10 @@
               }
             },
             "links" : {
-              "$ref" : "#/components/schemas/pipelines_pipeline_links"
+              "description" : "Hypermedia links related to the pipeline.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipelines_pipeline_links"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -23733,7 +23783,7 @@
           "properties" : {
             "href" : {
               "type" : "string",
-              "description" : "A link",
+              "description" : "URL of the linked resource.",
               "format" : "uri"
             }
           },
@@ -23749,10 +23799,16 @@
           "type" : "object",
           "properties" : {
             "self" : {
-              "$ref" : "#/components/schemas/pipelines_links_section_href"
+              "description" : "The self of the pipelines pipeline links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipelines_links_section_href"
+              } ]
             },
             "steps" : {
-              "$ref" : "#/components/schemas/pipelines_links_section_href"
+              "description" : "The steps of the pipelines pipeline links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipelines_links_section_href"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -23881,10 +23937,16 @@
               "description" : "The name of the reference."
             },
             "commit" : {
-              "$ref" : "#/components/schemas/commit"
+              "description" : "The commit of the pipeline ref target.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/commit"
+              } ]
             },
             "selector" : {
-              "$ref" : "#/components/schemas/pipeline_selector"
+              "description" : "The selector of the pipeline ref target.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_selector"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -24233,7 +24295,10 @@
               "description" : "The hostname of the known host."
             },
             "public_key" : {
-              "$ref" : "#/components/schemas/pipeline_ssh_public_key"
+              "description" : "The public key of the pipeline known host.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_ssh_public_key"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -24276,7 +24341,10 @@
               "description" : "Whether the schedule is enabled."
             },
             "target" : {
-              "$ref" : "#/components/schemas/pipeline_ref_target"
+              "description" : "The target of the pipeline schedule.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_ref_target"
+              } ]
             },
             "cron_pattern" : {
               "type" : "string",
@@ -24310,7 +24378,10 @@
               "type" : "object",
               "properties" : {
                 "selector" : {
-                  "$ref" : "#/components/schemas/pipeline_selector"
+                  "description" : "The selector that picks the pipeline definition to run on schedule.",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/pipeline_selector"
+                  } ]
                 },
                 "ref_name" : {
                   "type" : "string",
@@ -24530,10 +24601,16 @@
               "format" : "date-time"
             },
             "state" : {
-              "$ref" : "#/components/schemas/pipeline_step_state"
+              "description" : "The state of the pipeline step.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_step_state"
+              } ]
             },
             "image" : {
-              "$ref" : "#/components/schemas/pipeline_image"
+              "description" : "The image of the pipeline step.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_image"
+              } ]
             },
             "setup_commands" : {
               "type" : "array",
@@ -24991,7 +25068,10 @@
               }
             },
             "state" : {
-              "$ref" : "#/components/schemas/pipeline_runner_state"
+              "description" : "The state of the pipeline runner.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_runner_state"
+              } ]
             },
             "created_on" : {
               "type" : "string",
@@ -25004,7 +25084,10 @@
               "format" : "date-time"
             },
             "oauth_client" : {
-              "$ref" : "#/components/schemas/pipeline_runner_oauth_client"
+              "description" : "The oauth client of the pipeline runner.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_runner_oauth_client"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -25024,7 +25107,10 @@
               "enum" : [ "UNREGISTERED", "ONLINE", "OFFLINE", "DISABLED", "ENABLED", "UNHEALTHY" ]
             },
             "version" : {
-              "$ref" : "#/components/schemas/pipeline_runner_version"
+              "description" : "The version of the pipeline runner state.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pipeline_runner_version"
+              } ]
             },
             "updated_on" : {
               "type" : "string",
@@ -25154,15 +25240,18 @@
         "properties" : {
           "type" : {
             "type" : "string",
+            "description" : "Discriminator that identifies the type of this object.",
             "readOnly" : true
           },
           "content_match_count" : {
             "type" : "integer",
+            "description" : "Numeric content match count of the search code search result.",
             "format" : "int64",
             "readOnly" : true
           },
           "content_matches" : {
             "type" : "array",
+            "description" : "List of content matches of the search code search result.",
             "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/search_content_match"
@@ -25170,13 +25259,17 @@
           },
           "path_matches" : {
             "type" : "array",
+            "description" : "List of path matches of the search code search result.",
             "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/search_segment"
             }
           },
           "file" : {
-            "$ref" : "#/components/schemas/commit_file"
+            "description" : "The file of the search code search result.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/commit_file"
+            } ]
           }
         }
       },
@@ -25185,6 +25278,7 @@
         "properties" : {
           "lines" : {
             "type" : "array",
+            "description" : "List of lines of the search content match.",
             "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/search_line"
@@ -25197,11 +25291,13 @@
         "properties" : {
           "line" : {
             "type" : "integer",
+            "description" : "Numeric line of the search line.",
             "format" : "int32",
             "readOnly" : true
           },
           "segments" : {
             "type" : "array",
+            "description" : "List of segments of the search line.",
             "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/search_segment"
@@ -25214,35 +25310,42 @@
         "properties" : {
           "size" : {
             "type" : "integer",
+            "description" : "Total number of items in the collection, when known.",
             "format" : "int64",
             "readOnly" : true
           },
           "page" : {
             "type" : "integer",
+            "description" : "Current page number.",
             "format" : "int32",
             "readOnly" : true
           },
           "pagelen" : {
             "type" : "integer",
+            "description" : "Number of items per page.",
             "format" : "int32",
             "readOnly" : true
           },
           "query_substituted" : {
             "type" : "boolean",
+            "description" : "Indicates whether the search result page has query substituted.",
             "readOnly" : true
           },
           "next" : {
             "type" : "string",
+            "description" : "URL of the next page of results, if any.",
             "format" : "uri",
             "readOnly" : true
           },
           "previous" : {
             "type" : "string",
+            "description" : "URL of the previous page of results, if any.",
             "format" : "uri",
             "readOnly" : true
           },
           "values" : {
             "type" : "array",
+            "description" : "List of search code search result objects in this page of results.",
             "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/search_code_search_result"
@@ -25255,10 +25358,12 @@
         "properties" : {
           "text" : {
             "type" : "string",
+            "description" : "The text of the search segment.",
             "readOnly" : true
           },
           "match" : {
             "type" : "boolean",
+            "description" : "Indicates whether the search segment has match.",
             "readOnly" : true
           }
         }
@@ -25296,6 +25401,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of pullrequest objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/pullrequest"
             }
@@ -25309,7 +25415,8 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           }
         },
         "additionalProperties" : true,
@@ -25324,6 +25431,7 @@
         "properties" : {
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the project permission update.",
             "enum" : [ "read", "write", "create-repo", "admin" ]
           }
         },
@@ -25335,6 +25443,7 @@
         "properties" : {
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the repo permission update.",
             "enum" : [ "read", "write", "admin" ]
           }
         },
@@ -25347,6 +25456,7 @@
         "properties" : {
           "type" : {
             "type" : "string",
+            "description" : "Discriminator that identifies the type of this object.",
             "enum" : [ "pullrequest_state_check", "current_user_permission_check", "git_mergeability_check", "standard_merge_check", "custom_pre_merge_check", "custom_on_merge_check", "merge_queue_check" ]
           },
           "status" : {
@@ -25485,6 +25595,7 @@
           "properties" : {
             "type" : {
               "type" : "string",
+              "description" : "Discriminator that identifies the type of this object.",
               "enum" : [ "custom_pre_merge_check", "custom_on_merge_check" ]
             },
             "check" : {
@@ -25578,11 +25689,13 @@
         "properties" : {
           "size" : {
             "minimum" : 0,
-            "type" : "integer"
+            "type" : "integer",
+            "description" : "Total number of items in the collection, when known."
           },
           "values" : {
             "minItems" : 0,
             "type" : "array",
+            "description" : "List of pullrequest mergeability check objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/pullrequest_mergeability_check"
             }
@@ -25600,10 +25713,14 @@
             "$ref" : "#/components/schemas/TaskRawContent"
           },
           "comment" : {
-            "$ref" : "#/components/schemas/comment"
+            "description" : "The comment of the pullrequest task create.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/comment"
+            } ]
           },
           "pending" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "description" : "Indicates whether the pullrequest task create has pending."
           }
         },
         "additionalProperties" : false,
@@ -25618,6 +25735,7 @@
           },
           "state" : {
             "type" : "string",
+            "description" : "The state of the pullrequest task update.",
             "enum" : [ "RESOLVED", "UNRESOLVED" ]
           }
         },
@@ -25631,28 +25749,36 @@
         "properties" : {
           "id" : {
             "type" : "integer",
+            "description" : "Unique numeric identifier of the task.",
             "format" : "int64"
           },
           "created_on" : {
             "type" : "string",
+            "description" : "Timestamp of the created on of the task.",
             "format" : "date-time"
           },
           "updated_on" : {
             "type" : "string",
+            "description" : "Timestamp of the updated on of the task.",
             "format" : "date-time"
           },
           "state" : {
             "type" : "string",
+            "description" : "The state of the task.",
             "enum" : [ "RESOLVED", "UNRESOLVED" ]
           },
           "content" : {
             "$ref" : "#/components/schemas/TaskContent"
           },
           "creator" : {
-            "$ref" : "#/components/schemas/account"
+            "description" : "The creator of the task.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/account"
+            } ]
           },
           "pending" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "description" : "Indicates whether the task has pending."
           },
           "resolved_on" : {
             "type" : "string",
@@ -25660,7 +25786,10 @@
             "format" : "date-time"
           },
           "resolved_by" : {
-            "$ref" : "#/components/schemas/account"
+            "description" : "The resolved by of the task.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/account"
+            } ]
           }
         },
         "additionalProperties" : false,
@@ -25672,7 +25801,8 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "error" : {
             "$ref" : "#/components/schemas/ErrorError"
@@ -25686,7 +25816,10 @@
         "type" : "object",
         "properties" : {
           "avatar" : {
-            "$ref" : "#/components/schemas/link"
+            "description" : "The avatar of the account links.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/link"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -25698,10 +25831,12 @@
         "properties" : {
           "href" : {
             "type" : "string",
+            "description" : "URL of the linked resource.",
             "format" : "uri"
           },
           "name" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Name of the link."
           }
         },
         "additionalProperties" : false,
@@ -25715,17 +25850,23 @@
           "type" : "object",
           "properties" : {
             "links" : {
-              "$ref" : "#/components/schemas/account_links"
+              "description" : "Hypermedia links related to the account.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account_links"
+              } ]
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the account.",
               "format" : "date-time"
             },
             "display_name" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "The display name of the account."
             },
             "uuid" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "Universally unique identifier of the account."
             }
           },
           "additionalProperties" : true,
@@ -25765,6 +25906,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of account objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/account"
             }
@@ -25806,6 +25948,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of repository objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/repository"
             }
@@ -25820,10 +25963,12 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "override_settings" : {
-            "type" : "object"
+            "type" : "object",
+            "description" : "The override settings of the repository inheritance state."
           }
         },
         "additionalProperties" : true,
@@ -25845,10 +25990,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25860,10 +26007,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25875,10 +26024,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25890,10 +26041,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25905,10 +26058,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25920,10 +26075,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25935,10 +26092,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25950,10 +26109,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -25961,16 +26122,19 @@
                 },
                 "clone" : {
                   "type" : "array",
+                  "description" : "Clone URLs of the repository, one per protocol.",
                   "items" : {
                     "title" : "Link",
                     "type" : "object",
                     "properties" : {
                       "href" : {
                         "type" : "string",
+                        "description" : "URL of the linked resource.",
                         "format" : "uri"
                       },
                       "name" : {
-                        "type" : "string"
+                        "type" : "string",
+                        "description" : "Display name of the linked resource."
                       }
                     },
                     "additionalProperties" : false,
@@ -25983,17 +26147,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the repository."
             },
             "uuid" : {
               "type" : "string",
@@ -26004,37 +26171,51 @@
               "description" : "The concatenation of the repository owner's username and the slugified name, e.g. \"evzijst/interruptingcow\". This is the same string used in Bitbucket URLs."
             },
             "is_private" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the repository is private."
             },
             "parent" : {
-              "$ref" : "#/components/schemas/repository"
+              "description" : "The parent of the repository.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/repository"
+              } ]
             },
             "scm" : {
               "type" : "string",
+              "description" : "The scm of the repository.",
               "enum" : [ "git" ]
             },
             "owner" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The owner of the repository.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "name" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "Name of the repository."
             },
             "description" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "The description of the repository."
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the repository.",
               "format" : "date-time"
             },
             "updated_on" : {
               "type" : "string",
+              "description" : "Timestamp of the updated on of the repository.",
               "format" : "date-time"
             },
             "size" : {
-              "type" : "integer"
+              "type" : "integer",
+              "description" : "Total number of items in the collection, when known."
             },
             "language" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "The language of the repository."
             },
             "has_issues" : {
               "type" : "boolean",
@@ -26050,10 +26231,16 @@
               "enum" : [ "allow_forks", "no_public_forks", "no_forks" ]
             },
             "project" : {
-              "$ref" : "#/components/schemas/project"
+              "description" : "The project of the repository.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/project"
+              } ]
             },
             "mainbranch" : {
-              "$ref" : "#/components/schemas/branch"
+              "description" : "The mainbranch of the repository.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/branch"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -26103,7 +26290,8 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`)."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The development of the project branching model."
             },
             "production" : {
               "required" : [ "name", "use_mainbranch" ],
@@ -26118,7 +26306,8 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`)."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The production of the project branching model."
             }
           },
           "additionalProperties" : true,
@@ -26160,7 +26349,10 @@
               "type" : "object",
               "properties" : {
                 "branch" : {
-                  "$ref" : "#/components/schemas/branch"
+                  "description" : "The branch used as the development branch.",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/branch"
+                  } ]
                 },
                 "name" : {
                   "type" : "string",
@@ -26171,14 +26363,18 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`)."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The development of the branching model."
             },
             "production" : {
               "required" : [ "name", "use_mainbranch" ],
               "type" : "object",
               "properties" : {
                 "branch" : {
-                  "$ref" : "#/components/schemas/branch"
+                  "description" : "The branch used as the production branch.",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/branch"
+                  } ]
                 },
                 "name" : {
                   "type" : "string",
@@ -26189,7 +26385,8 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`)."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The production of the branching model."
             }
           },
           "additionalProperties" : true,
@@ -26212,23 +26409,27 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the branching model settings."
             },
             "branch_types" : {
               "maxItems" : 4,
               "minItems" : 0,
               "uniqueItems" : true,
               "type" : "array",
+              "description" : "List of branch types of the branching model settings.",
               "items" : {
                 "required" : [ "kind" ],
                 "type" : "object",
@@ -26266,7 +26467,8 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`). When `true` the `name` must be `null` or not provided. When `false` the `name` must contain a non-empty branch name."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The development of the branching model settings."
             },
             "production" : {
               "type" : "object",
@@ -26288,7 +26490,8 @@
                   "description" : "Indicates if branch is enabled or not."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The production of the branching model settings."
             }
           },
           "additionalProperties" : true,
@@ -26330,7 +26533,10 @@
               "type" : "object",
               "properties" : {
                 "branch" : {
-                  "$ref" : "#/components/schemas/branch"
+                  "description" : "The branch used as the development branch.",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/branch"
+                  } ]
                 },
                 "name" : {
                   "type" : "string",
@@ -26341,14 +26547,18 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`)."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The development of the effective repo branching model."
             },
             "production" : {
               "required" : [ "name", "use_mainbranch" ],
               "type" : "object",
               "properties" : {
                 "branch" : {
-                  "$ref" : "#/components/schemas/branch"
+                  "description" : "The branch used as the production branch.",
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/branch"
+                  } ]
                 },
                 "name" : {
                   "type" : "string",
@@ -26359,7 +26569,8 @@
                   "description" : "Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`)."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The production of the effective repo branching model."
             }
           },
           "additionalProperties" : true,
@@ -26399,6 +26610,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of branch restriction objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/branchrestriction"
             }
@@ -26416,14 +26628,17 @@
           "properties" : {
             "id" : {
               "type" : "integer",
+              "description" : "Unique numeric identifier of the comment.",
               "format" : "int64"
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the comment.",
               "format" : "date-time"
             },
             "updated_on" : {
               "type" : "string",
+              "description" : "Timestamp of the updated on of the comment.",
               "format" : "date-time"
             },
             "content" : {
@@ -26443,16 +26658,24 @@
                   "description" : "The user's content rendered as HTML."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The content of the comment."
             },
             "user" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The user associated with the comment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "deleted" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the comment has deleted."
             },
             "parent" : {
-              "$ref" : "#/components/schemas/comment"
+              "description" : "The parent of the comment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/comment"
+              } ]
             },
             "inline" : {
               "required" : [ "path" ],
@@ -26483,7 +26706,8 @@
                   "description" : "The path of the file this comment is anchored to."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The inline of the comment."
             },
             "links" : {
               "type" : "object",
@@ -26494,10 +26718,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -26509,10 +26735,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -26524,17 +26752,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the comment."
             }
           },
           "additionalProperties" : true,
@@ -26558,10 +26789,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -26573,17 +26806,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the commitstatus."
             },
             "key" : {
               "type" : "string",
@@ -26612,10 +26848,12 @@
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the commitstatus.",
               "format" : "date-time"
             },
             "updated_on" : {
               "type" : "string",
+              "description" : "Timestamp of the updated on of the commitstatus.",
               "format" : "date-time"
             }
           },
@@ -26656,6 +26894,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of commitstatus objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/commitstatus"
             }
@@ -26680,10 +26919,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -26695,26 +26936,36 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the group."
             },
             "owner" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The owner of the group.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "workspace" : {
-              "$ref" : "#/components/schemas/workspace"
+              "description" : "The workspace of the group.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/workspace"
+              } ]
             },
             "name" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "Name of the group."
             },
             "slug" : {
               "type" : "string",
@@ -26735,20 +26986,28 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "links" : {
             "$ref" : "#/components/schemas/ProjectGroupPermissionLinks"
           },
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the project group permission.",
             "enum" : [ "read", "write", "create-repo", "admin", "none" ]
           },
           "group" : {
-            "$ref" : "#/components/schemas/group"
+            "description" : "The group of the project group permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/group"
+            } ]
           },
           "project" : {
-            "$ref" : "#/components/schemas/project"
+            "description" : "The project of the project group permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/project"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -26760,20 +27019,28 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "links" : {
             "$ref" : "#/components/schemas/ProjectGroupPermissionLinks"
           },
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the repository group permission.",
             "enum" : [ "read", "write", "admin", "none" ]
           },
           "group" : {
-            "$ref" : "#/components/schemas/group"
+            "description" : "The group of the repository group permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/group"
+            } ]
           },
           "repository" : {
-            "$ref" : "#/components/schemas/repository"
+            "description" : "The repository of the repository group permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/repository"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -26812,6 +27079,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of project group permission objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/project_group_permission"
             }
@@ -26853,6 +27121,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of project user permission objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/project_user_permission"
             }
@@ -26894,6 +27163,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of repository group permission objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/repository_group_permission"
             }
@@ -26935,6 +27205,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of repository permission objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/repository_permission"
             }
@@ -26976,6 +27247,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of repository user permission objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/repository_user_permission"
             }
@@ -26990,17 +27262,25 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the repository permission.",
             "enum" : [ "read", "write", "admin", "none" ]
           },
           "user" : {
-            "$ref" : "#/components/schemas/user"
+            "description" : "The user associated with the repository permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/user"
+            } ]
           },
           "repository" : {
-            "$ref" : "#/components/schemas/repository"
+            "description" : "The repository of the repository permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/repository"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -27012,20 +27292,28 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "links" : {
             "$ref" : "#/components/schemas/ProjectGroupPermissionLinks"
           },
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the project user permission.",
             "enum" : [ "read", "write", "create-repo", "admin", "none" ]
           },
           "user" : {
-            "$ref" : "#/components/schemas/user"
+            "description" : "The user associated with the project user permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/user"
+            } ]
           },
           "project" : {
-            "$ref" : "#/components/schemas/project"
+            "description" : "The project of the project user permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/project"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -27064,6 +27352,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of project objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/project"
             }
@@ -27080,7 +27369,10 @@
           "type" : "object",
           "properties" : {
             "links" : {
-              "$ref" : "#/components/schemas/team_links"
+              "description" : "Hypermedia links related to the team.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/team_links"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -27095,19 +27387,34 @@
           "type" : "object",
           "properties" : {
             "self" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The self of the team links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             },
             "html" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The html of the team links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             },
             "members" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The members of the team links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             },
             "projects" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The projects of the team links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             },
             "repositories" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The repositories of the team links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -27130,10 +27437,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27145,17 +27454,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the project."
             },
             "uuid" : {
               "type" : "string",
@@ -27166,14 +27478,18 @@
               "description" : "The project's key."
             },
             "owner" : {
-              "$ref" : "#/components/schemas/team"
+              "description" : "The owner of the project.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/team"
+              } ]
             },
             "name" : {
               "type" : "string",
               "description" : "The name of the project."
             },
             "description" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "The description of the project."
             },
             "is_private" : {
               "type" : "boolean",
@@ -27181,10 +27497,12 @@
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the project.",
               "format" : "date-time"
             },
             "updated_on" : {
               "type" : "string",
+              "description" : "Timestamp of the updated on of the project.",
               "format" : "date-time"
             },
             "has_publicly_visible_repos" : {
@@ -27202,10 +27520,14 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "user" : {
-            "$ref" : "#/components/schemas/account"
+            "description" : "The user associated with the comment resolution.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/account"
+            } ]
           },
           "created_on" : {
             "type" : "string",
@@ -27222,13 +27544,18 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "reviewer_type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "The reviewer type of the default reviewer and type."
           },
           "user" : {
-            "$ref" : "#/components/schemas/user"
+            "description" : "The user associated with the default reviewer and type.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/user"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -27267,6 +27594,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of default reviewer and type objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/default_reviewer_and_type"
             }
@@ -27308,6 +27636,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of pullrequest comment objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/pullrequest_comment"
             }
@@ -27349,6 +27678,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of pullrequest comment task objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/pullrequest_comment_task"
             }
@@ -27365,17 +27695,23 @@
           "type" : "object",
           "properties" : {
             "user" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The user associated with the participant.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "role" : {
               "type" : "string",
+              "description" : "The role of the participant.",
               "enum" : [ "PARTICIPANT", "REVIEWER" ]
             },
             "approved" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the participant has approved."
             },
             "state" : {
               "type" : "string",
+              "description" : "The state of the participant.",
               "enum" : [ "approved", "changes_requested", null ]
             },
             "participated_on" : {
@@ -27394,7 +27730,8 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "message" : {
             "type" : "string",
@@ -27407,8 +27744,8 @@
           "merge_strategy" : {
             "type" : "string",
             "description" : "The merge strategy that will be used to merge the pull request.",
-            "enum" : [ "merge_commit", "squash", "fast_forward", "squash_fast_forward", "rebase_fast_forward", "rebase_merge" ],
-            "default" : "merge_commit"
+            "default" : "merge_commit",
+            "enum" : [ "merge_commit", "squash", "fast_forward", "squash_fast_forward", "rebase_fast_forward", "rebase_merge" ]
           }
         },
         "additionalProperties" : true,
@@ -27419,7 +27756,10 @@
         "type" : "object",
         "properties" : {
           "repository" : {
-            "$ref" : "#/components/schemas/repository"
+            "description" : "The repository of the pullrequest endpoint.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/repository"
+            } ]
           },
           "branch" : {
             "$ref" : "#/components/schemas/PullRequestBranch"
@@ -27446,10 +27786,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27461,10 +27803,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27476,10 +27820,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27491,10 +27837,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27506,10 +27854,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27521,10 +27871,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27536,10 +27888,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27551,10 +27905,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27566,10 +27922,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27581,10 +27939,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27596,17 +27956,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the pullrequest."
             },
             "id" : {
               "type" : "integer",
@@ -27617,7 +27980,7 @@
               "description" : "Title of the pull request."
             },
             "rendered" : {
-              "title" : "Rendered Pull Request Markup",
+              "title" : "RenderedPullRequestMarkup",
               "type" : "object",
               "properties" : {
                 "title" : {
@@ -27637,7 +28000,8 @@
                       "description" : "The user's content rendered as HTML."
                     }
                   },
-                  "additionalProperties" : false
+                  "additionalProperties" : false,
+                  "description" : "Pull request text in its raw form, its markup language and its rendered HTML."
                 },
                 "description" : {
                   "type" : "object",
@@ -27656,7 +28020,8 @@
                       "description" : "The user's content rendered as HTML."
                     }
                   },
-                  "additionalProperties" : false
+                  "additionalProperties" : false,
+                  "description" : "Pull request text in its raw form, its markup language and its rendered HTML."
                 },
                 "reason" : {
                   "type" : "object",
@@ -27675,7 +28040,8 @@
                       "description" : "The user's content rendered as HTML."
                     }
                   },
-                  "additionalProperties" : false
+                  "additionalProperties" : false,
+                  "description" : "Pull request text in its raw form, its markup language and its rendered HTML."
                 }
               },
               "additionalProperties" : false,
@@ -27698,7 +28064,8 @@
                   "description" : "The user's content rendered as HTML."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The summary of the pullrequest."
             },
             "state" : {
               "type" : "string",
@@ -27706,24 +28073,35 @@
               "enum" : [ "OPEN", "MERGED", "DECLINED", "SUPERSEDED" ]
             },
             "author" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The author of the pullrequest.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "source" : {
-              "$ref" : "#/components/schemas/pullrequest_endpoint"
+              "description" : "The source of the pullrequest.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pullrequest_endpoint"
+              } ]
             },
             "destination" : {
-              "$ref" : "#/components/schemas/pullrequest_endpoint"
+              "description" : "The destination of the pullrequest.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pullrequest_endpoint"
+              } ]
             },
             "merge_commit" : {
-              "title" : "Pull Request Commit",
+              "title" : "PullRequestCommit",
               "type" : "object",
               "properties" : {
                 "hash" : {
                   "pattern" : "[0-9a-f]{7,}?",
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "The hash of the merge commit."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The merge commit of the pullrequest."
             },
             "comment_count" : {
               "minimum" : 0,
@@ -27740,7 +28118,10 @@
               "description" : "A boolean flag indicating if merging the pull request closes the source branch."
             },
             "closed_by" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The closed by of the pullrequest.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "reason" : {
               "type" : "string",
@@ -27799,10 +28180,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -27814,17 +28197,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the pullrequest task."
             }
           },
           "additionalProperties" : false,
@@ -27837,17 +28223,21 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "path" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "The path of the file conflict."
           },
           "scenario" : {
             "type" : "string",
+            "description" : "The scenario of the file conflict.",
             "enum" : [ "delete_modify", "modify_delete", "content", "binary", "flags", "mode", "type", "symlink", "directory_file", "file_directory", "add_rename", "rename_add", "delete_rename", "rename_delete", "rename", "subrepo", "unknown" ]
           },
           "message" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "The message of the file conflict."
           }
         },
         "additionalProperties" : true,
@@ -27886,6 +28276,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of file conflict objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/file_conflict"
             }
@@ -27906,7 +28297,10 @@
               "description" : "The raw author value from the repository. This may be the only value available if the author does not match a user in Bitbucket."
             },
             "user" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The user associated with the author.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -27922,20 +28316,29 @@
           "properties" : {
             "hash" : {
               "pattern" : "[0-9a-f]{7,}?",
-              "type" : "string"
+              "type" : "string",
+              "description" : "The hash of the base commit."
             },
             "date" : {
               "type" : "string",
+              "description" : "Timestamp of the date of the base commit.",
               "format" : "date-time"
             },
             "author" : {
-              "$ref" : "#/components/schemas/author"
+              "description" : "The author of the base commit.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/author"
+              } ]
             },
             "committer" : {
-              "$ref" : "#/components/schemas/committer"
+              "description" : "The committer of the base commit.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/committer"
+              } ]
             },
             "message" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "The message of the base commit."
             },
             "summary" : {
               "type" : "object",
@@ -27954,11 +28357,13 @@
                   "description" : "The user's content rendered as HTML."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "The summary of the base commit."
             },
             "parents" : {
               "minItems" : 0,
               "type" : "array",
+              "description" : "List of parents of the base commit.",
               "items" : {
                 "$ref" : "#/components/schemas/base_commit"
               }
@@ -27980,7 +28385,10 @@
               "description" : "The raw committer value from the repository. This may be the only value available if the committer does not match a user in Bitbucket."
             },
             "user" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The user associated with the committer.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -28020,6 +28428,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of base commit objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/base_commit"
             }
@@ -28061,6 +28470,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of commit comment objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/commit_comment"
             }
@@ -28075,17 +28485,22 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "path" : {
             "type" : "string",
             "description" : "The path in the repository"
           },
           "commit" : {
-            "$ref" : "#/components/schemas/commit"
+            "description" : "The commit of the commit file.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/commit"
+            } ]
           },
           "attributes" : {
             "type" : "string",
+            "description" : "The attributes of the commit file.",
             "enum" : [ "link", "executable", "subrepository", "binary", "lfs" ]
           },
           "escaped_path" : {
@@ -28102,23 +28517,33 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "status" : {
             "type" : "string",
+            "description" : "The status of the diffstat.",
             "enum" : [ "added", "removed", "modified", "renamed" ]
           },
           "lines_added" : {
-            "type" : "integer"
+            "type" : "integer",
+            "description" : "Numeric lines added of the diffstat."
           },
           "lines_removed" : {
-            "type" : "integer"
+            "type" : "integer",
+            "description" : "Numeric lines removed of the diffstat."
           },
           "old" : {
-            "$ref" : "#/components/schemas/commit_file"
+            "description" : "The old of the diffstat.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/commit_file"
+            } ]
           },
           "new" : {
-            "$ref" : "#/components/schemas/commit_file"
+            "description" : "The new of the diffstat.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/commit_file"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -28157,6 +28582,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of diffstat objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/diffstat"
             }
@@ -28198,6 +28624,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of commit file objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/commit_file"
             }
@@ -28239,6 +28666,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of ref objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/ref"
             }
@@ -28253,14 +28681,18 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "path" : {
             "type" : "string",
             "description" : "The path in the repository"
           },
           "commit" : {
-            "$ref" : "#/components/schemas/commit"
+            "description" : "The commit of the treeentry.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/commit"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -28299,6 +28731,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of treeentry objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/treeentry"
             }
@@ -28313,7 +28746,8 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "links" : {
             "$ref" : "#/components/schemas/RefLinks"
@@ -28323,7 +28757,10 @@
             "description" : "The name of the ref."
           },
           "target" : {
-            "$ref" : "#/components/schemas/commit"
+            "description" : "The target of the ref.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/commit"
+            } ]
           }
         },
         "additionalProperties" : true,
@@ -28361,6 +28798,7 @@
           "values" : {
             "minItems" : 0,
             "type" : "array",
+            "description" : "List of snippet commit objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/snippet_commit"
             }
@@ -28402,6 +28840,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of snippet comment objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/snippet_comment"
             }
@@ -28443,6 +28882,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of snippet objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/snippet"
             }
@@ -28467,10 +28907,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -28482,20 +28924,26 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the snippet comment."
             },
             "snippet" : {
-              "$ref" : "#/components/schemas/snippet"
+              "description" : "The snippet of the snippet comment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/snippet"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -28511,10 +28959,12 @@
           "properties" : {
             "id" : {
               "minimum" : 0,
-              "type" : "integer"
+              "type" : "integer",
+              "description" : "Unique numeric identifier of the snippet."
             },
             "title" : {
-              "type" : "string"
+              "type" : "string",
+              "description" : "The title of the snippet."
             },
             "scm" : {
               "type" : "string",
@@ -28523,20 +28973,29 @@
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the snippet.",
               "format" : "date-time"
             },
             "updated_on" : {
               "type" : "string",
+              "description" : "Timestamp of the updated on of the snippet.",
               "format" : "date-time"
             },
             "owner" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The owner of the snippet.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "creator" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The creator of the snippet.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "is_private" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the snippet is private."
             }
           },
           "additionalProperties" : true,
@@ -28555,7 +29014,10 @@
               "description" : "The deploy key value."
             },
             "repository" : {
-              "$ref" : "#/components/schemas/repository"
+              "description" : "The repository of the deploy key.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/repository"
+              } ]
             },
             "comment" : {
               "type" : "string",
@@ -28567,10 +29029,12 @@
             },
             "added_on" : {
               "type" : "string",
+              "description" : "Timestamp of the added on of the deploy key.",
               "format" : "date-time"
             },
             "last_used" : {
               "type" : "string",
+              "description" : "Timestamp of the last used of the deploy key.",
               "format" : "date-time"
             },
             "links" : {
@@ -28582,20 +29046,26 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the deploy key."
             },
             "owner" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The owner of the deploy key.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -28610,7 +29080,10 @@
           "type" : "object",
           "properties" : {
             "owner" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The owner of the gpg account key.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "key" : {
               "type" : "string",
@@ -28634,24 +29107,29 @@
             },
             "expires_on" : {
               "type" : "string",
+              "description" : "Timestamp of the expires on of the gpg account key.",
               "format" : "date-time"
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the gpg account key.",
               "format" : "date-time"
             },
             "added_on" : {
               "type" : "string",
+              "description" : "Timestamp of the added on of the gpg account key.",
               "format" : "date-time"
             },
             "last_used" : {
               "type" : "string",
+              "description" : "Timestamp of the last used of the gpg account key.",
               "format" : "date-time"
             },
             "subkeys" : {
               "minItems" : 0,
               "uniqueItems" : true,
               "type" : "array",
+              "description" : "List of subkeys of the gpg account key.",
               "items" : {
                 "$ref" : "#/components/schemas/GPG_account_key"
               }
@@ -28665,17 +29143,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the gpg account key."
             }
           },
           "additionalProperties" : true,
@@ -28715,6 +29196,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of deploy key objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/deploy_key"
             }
@@ -28756,6 +29238,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of gpg account key objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/GPG_account_key"
             }
@@ -28797,6 +29280,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of project deploy key objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/project_deploy_key"
             }
@@ -28838,6 +29322,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of ssh account key objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/ssh_account_key"
             }
@@ -28858,7 +29343,10 @@
               "description" : "The deploy key value."
             },
             "project" : {
-              "$ref" : "#/components/schemas/project"
+              "description" : "The project of the project deploy key.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/project"
+              } ]
             },
             "comment" : {
               "type" : "string",
@@ -28870,10 +29358,12 @@
             },
             "added_on" : {
               "type" : "string",
+              "description" : "Timestamp of the added on of the project deploy key.",
               "format" : "date-time"
             },
             "last_used" : {
               "type" : "string",
+              "description" : "Timestamp of the last used of the project deploy key.",
               "format" : "date-time"
             },
             "links" : {
@@ -28885,20 +29375,26 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the project deploy key."
             },
             "created_by" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The created by of the project deploy key.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -28930,10 +29426,12 @@
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the ssh key.",
               "format" : "date-time"
             },
             "last_used" : {
               "type" : "string",
+              "description" : "Timestamp of the last used of the ssh key.",
               "format" : "date-time"
             },
             "links" : {
@@ -28945,17 +29443,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the ssh key."
             }
           },
           "additionalProperties" : true,
@@ -28974,7 +29475,10 @@
               "description" : "The permission level the user has for the workspace. True if the user is an administrator, otherwise False."
             },
             "workspace" : {
-              "$ref" : "#/components/schemas/workspace_base"
+              "description" : "The workspace of the workspace access.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/workspace_base"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -28997,10 +29501,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29012,17 +29518,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the workspace base."
             },
             "uuid" : {
               "type" : "string",
@@ -29070,6 +29579,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of workspace access objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/workspace_access"
             }
@@ -29111,6 +29621,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of workspace membership objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/workspace_membership"
             }
@@ -29135,23 +29646,32 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the workspace membership."
             },
             "user" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The user associated with the workspace membership.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "workspace" : {
-              "$ref" : "#/components/schemas/workspace"
+              "description" : "The workspace of the workspace membership.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/workspace"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -29174,10 +29694,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29189,10 +29711,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29204,10 +29728,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29219,10 +29745,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29234,10 +29762,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29249,10 +29779,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29264,10 +29796,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29279,17 +29813,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the workspace."
             },
             "uuid" : {
               "type" : "string",
@@ -29322,10 +29859,12 @@
             },
             "created_on" : {
               "type" : "string",
+              "description" : "Timestamp of the created on of the workspace.",
               "format" : "date-time"
             },
             "updated_on" : {
               "type" : "string",
+              "description" : "Timestamp of the updated on of the workspace.",
               "format" : "date-time"
             }
           },
@@ -29365,13 +29904,22 @@
           "type" : "object",
           "properties" : {
             "self" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The self of the user links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             },
             "html" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The html of the user links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             },
             "repositories" : {
-              "$ref" : "#/components/schemas/link"
+              "description" : "The repositories of the user links.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/link"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -29386,7 +29934,10 @@
           "type" : "object",
           "properties" : {
             "links" : {
-              "$ref" : "#/components/schemas/user_links"
+              "description" : "Hypermedia links related to the user.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/user_links"
+              } ]
             },
             "account_id" : {
               "type" : "string",
@@ -29397,14 +29948,16 @@
               "description" : "The status of the account. Currently the only possible value is \"active\", but more values may be added in the future."
             },
             "has_2fa_enabled" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the user has has 2fa enabled."
             },
             "nickname" : {
               "type" : "string",
               "description" : "Account name defined by the owner. Should be used instead of the \"username\" field. Note that \"nickname\" cannot be used in place of \"username\" in URLs and queries, as \"nickname\" is not guaranteed to be unique."
             },
             "is_staff" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the user is staff."
             }
           },
           "additionalProperties" : true,
@@ -29428,17 +29981,20 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the branch restriction."
             },
             "id" : {
               "type" : "integer",
@@ -29477,6 +30033,7 @@
             "users" : {
               "minItems" : 0,
               "type" : "array",
+              "description" : "List of users of the branch restriction.",
               "items" : {
                 "$ref" : "#/components/schemas/account"
               }
@@ -29484,6 +30041,7 @@
             "groups" : {
               "minItems" : 0,
               "type" : "array",
+              "description" : "List of groups of the branch restriction.",
               "items" : {
                 "$ref" : "#/components/schemas/group"
               }
@@ -29499,17 +30057,25 @@
         "type" : "object",
         "properties" : {
           "type" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Discriminator that identifies the type of this object."
           },
           "permission" : {
             "type" : "string",
+            "description" : "The permission level granted on the repository user permission.",
             "enum" : [ "read", "write", "admin", "none" ]
           },
           "user" : {
-            "$ref" : "#/components/schemas/user"
+            "description" : "The user associated with the repository user permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/user"
+            } ]
           },
           "repository" : {
-            "$ref" : "#/components/schemas/repository"
+            "description" : "The repository of the repository user permission.",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/repository"
+            } ]
           },
           "links" : {
             "$ref" : "#/components/schemas/ProjectGroupPermissionLinks"
@@ -29526,13 +30092,20 @@
           "type" : "object",
           "properties" : {
             "pullrequest" : {
-              "$ref" : "#/components/schemas/pullrequest"
+              "description" : "The pullrequest of the pullrequest comment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/pullrequest"
+              } ]
             },
             "resolution" : {
-              "$ref" : "#/components/schemas/comment_resolution"
+              "description" : "The resolution of the pullrequest comment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/comment_resolution"
+              } ]
             },
             "pending" : {
-              "type" : "boolean"
+              "type" : "boolean",
+              "description" : "Indicates whether the pullrequest comment has pending."
             }
           },
           "additionalProperties" : true,
@@ -29547,7 +30120,10 @@
           "type" : "object",
           "properties" : {
             "comment" : {
-              "$ref" : "#/components/schemas/comment"
+              "description" : "The comment of the pullrequest comment task.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/comment"
+              } ]
             }
           },
           "additionalProperties" : false,
@@ -29586,7 +30162,10 @@
           "type" : "object",
           "properties" : {
             "commit" : {
-              "$ref" : "#/components/schemas/commit"
+              "description" : "The commit of the commit comment.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/commit"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -29626,6 +30205,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of branch objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/branch"
             }
@@ -29667,6 +30247,7 @@
             "minItems" : 0,
             "uniqueItems" : true,
             "type" : "array",
+            "description" : "List of tag objects in this page of results.",
             "items" : {
               "$ref" : "#/components/schemas/tag"
             }
@@ -29683,11 +30264,15 @@
           "type" : "object",
           "properties" : {
             "repository" : {
-              "$ref" : "#/components/schemas/repository"
+              "description" : "The repository of the commit.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/repository"
+              } ]
             },
             "participants" : {
               "minItems" : 0,
               "type" : "array",
+              "description" : "List of participants of the commit.",
               "items" : {
                 "$ref" : "#/components/schemas/participant"
               }
@@ -29714,7 +30299,10 @@
               "format" : "date-time"
             },
             "tagger" : {
-              "$ref" : "#/components/schemas/author"
+              "description" : "The tagger of the tag.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/author"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -29737,10 +30325,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29752,10 +30342,12 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
@@ -29767,20 +30359,26 @@
                   "properties" : {
                     "href" : {
                       "type" : "string",
+                      "description" : "URL of the linked resource.",
                       "format" : "uri"
                     },
                     "name" : {
-                      "type" : "string"
+                      "type" : "string",
+                      "description" : "Display name of the linked resource."
                     }
                   },
                   "additionalProperties" : false,
                   "description" : "A link to a resource related to this object."
                 }
               },
-              "additionalProperties" : false
+              "additionalProperties" : false,
+              "description" : "Hypermedia links related to the snippet commit."
             },
             "snippet" : {
-              "$ref" : "#/components/schemas/snippet"
+              "description" : "The snippet of the snippet commit.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/snippet"
+              } ]
             }
           },
           "additionalProperties" : true,
@@ -29795,10 +30393,14 @@
           "type" : "object",
           "properties" : {
             "owner" : {
-              "$ref" : "#/components/schemas/account"
+              "description" : "The owner of the ssh account key.",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/account"
+              } ]
             },
             "expires_on" : {
               "type" : "string",
+              "description" : "Timestamp of the expires on of the ssh account key.",
               "format" : "date-time"
             },
             "fingerprint" : {
@@ -29816,10 +30418,12 @@
         "properties" : {
           "href" : {
             "type" : "string",
+            "description" : "URL of the linked resource.",
             "format" : "uri"
           },
           "name" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Display name of the linked resource."
           }
         },
         "additionalProperties" : false,
@@ -29832,7 +30436,8 @@
             "$ref" : "#/components/schemas/Link"
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Links to the event types of this subject type."
       },
       "SubjectTypesRepository" : {
         "type" : "object",
@@ -29841,7 +30446,8 @@
             "$ref" : "#/components/schemas/SubjectTypesRepositoryLinks"
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Event types available for this subject type."
       },
       "TaskRawContent" : {
         "title" : "Task Raw Content",
@@ -29873,7 +30479,8 @@
             "description" : "The user's content rendered as HTML."
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "The content of the task."
       },
       "ErrorError" : {
         "required" : [ "message" ],
@@ -29892,7 +30499,8 @@
             "description" : "Optional structured data that is endpoint-specific."
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "The error of the error."
       },
       "ProjectGroupPermissionLinks" : {
         "type" : "object",
@@ -29901,14 +30509,16 @@
             "$ref" : "#/components/schemas/Link"
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Hypermedia links related to the permission."
       },
       "PullRequestBranch" : {
         "title" : "Pull Request Branch",
         "type" : "object",
         "properties" : {
           "name" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "The name of the branch."
           },
           "merge_strategies" : {
             "type" : "array",
@@ -29923,18 +30533,21 @@
             "description" : "The default merge strategy, when this endpoint is the destination of the pull request."
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "The branch of the pullrequest endpoint."
       },
       "PullRequestCommit" : {
-        "title" : "Pull Request Commit",
+        "title" : "PullRequestCommit",
         "type" : "object",
         "properties" : {
           "hash" : {
             "pattern" : "[0-9a-f]{7,}?",
-            "type" : "string"
+            "type" : "string",
+            "description" : "The hash of the commit."
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "The commit of the pullrequest endpoint."
       },
       "RefLinks" : {
         "type" : "object",
@@ -29949,7 +30562,8 @@
             "$ref" : "#/components/schemas/Link"
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Hypermedia links related to the ref."
       }
     },
     "requestBodies" : {
@@ -30019,6 +30633,7 @@
         }
       },
       "project" : {
+        "description" : "Request payload containing the project to submit.",
         "content" : {
           "application/json" : {
             "schema" : {

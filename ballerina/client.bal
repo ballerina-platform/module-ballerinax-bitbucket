@@ -5141,7 +5141,7 @@ public isolated client class Client {
     # + workspace - This can either be the workspace ID (slug) or the workspace UUID
     # surrounded by curly-braces, for example: `{workspace UUID}`
     # + headers - Headers to be sent with the request 
-    # + payload - Request payload containing the project to submit. 
+    # + payload - Request payload containing the project to submit 
     # + return - A new project has been created 
     remote isolated function createProjectInWorkspace(string workspace, Project payload, map<string|string[]> headers = {}) returns Project|error {
         string resourcePath = string `/workspaces/${getEncodedUri(workspace)}/projects`;
@@ -5181,7 +5181,7 @@ public isolated client class Client {
     # + workspace - This can either be the workspace ID (slug) or the workspace UUID
     # surrounded by curly-braces, for example: `{workspace UUID}`
     # + headers - Headers to be sent with the request 
-    # + payload - Request payload containing the project to submit. 
+    # + payload - Request payload containing the project to submit 
     # + return - The existing project is has been updated 
     remote isolated function updateProjectForWorkspace(string projectKey, string workspace, Project payload, map<string|string[]> headers = {}) returns Project|error {
         string resourcePath = string `/workspaces/${getEncodedUri(workspace)}/projects/${getEncodedUri(projectKey)}`;

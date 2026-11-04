@@ -30,7 +30,7 @@ public type PaginatedPullrequests record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of pullrequest objects in this page of results.
+    # List of pullrequest objects in this page of results
     Pullrequest[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -49,7 +49,7 @@ public type PaginatedCommitstatuses record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of commitstatus objects in this page of results.
+    # List of commitstatus objects in this page of results
     Commitstatus[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -84,7 +84,7 @@ public type UserLinks record {
 };
 
 public type SearchContentMatch record {
-    # List of lines of the search content match.
+    # List of lines of the search content match
     SearchLine[] lines?;
 };
 
@@ -182,7 +182,7 @@ public type PaginatedSnippetComments record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of snippet comment objects in this page of results.
+    # List of snippet comment objects in this page of results
     SnippetComment[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -212,22 +212,12 @@ public type PipelineSchedulePostRequestBody_target record {
     # The name of the reference.
     @jsondata:Name {value: "ref_name"}
     string refName;
-    # The selector of the pipeline schedule post request body target.
+    # The selector that picks the pipeline definition to run on schedule.
     PipelineSelector selector;
     # The type of reference (branch only).
     @jsondata:Name {value: "ref_type"}
     "branch" refType;
 };
-
-# The description of the pullrequest rendered.
-public type RenderedPullRequestMarkup_description record {|
-    # The type of markup language the raw content is to be interpreted in.
-    "markdown"|"creole"|"plaintext" markup?;
-    # The text as it was typed by a user.
-    string raw?;
-    # The user's content rendered as HTML.
-    string html?;
-|};
 
 # A file conflict object
 public type FileConflict record {
@@ -308,7 +298,7 @@ public type PipelineImage record {
 public type ProjectUserPermission record {
     # Discriminator that identifies the type of this object.
     string 'type;
-    # Hypermedia links related to the project user permission.
+    # Hypermedia links related to the permission
     ProjectGroupPermissionLinks links?;
     # The permission level granted on the project user permission.
     "read"|"write"|"create-repo"|"admin"|"none" permission?;
@@ -355,7 +345,7 @@ public type PaginatedProjectUserPermissions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of project user permission objects in this page of results.
+    # List of project user permission objects in this page of results
     ProjectUserPermission[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -367,9 +357,9 @@ public type PaginatedProjectUserPermissions record {|
 
 # A link to a resource related to this object
 public type Link record {|
-    # Name of the link.
+    # Display name of the linked resource
     string name?;
-    # URL of the linked resource.
+    # URL of the linked resource
     string href?;
 |};
 
@@ -443,7 +433,7 @@ public type PaginatedRepositoryGroupPermissions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of repository group permission objects in this page of results.
+    # List of repository group permission objects in this page of results
     RepositoryGroupPermission[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -476,7 +466,7 @@ public type PaginatedSshUserKeys record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of ssh account key objects in this page of results.
+    # List of ssh account key objects in this page of results
     SshAccountKey[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -519,7 +509,7 @@ public type Team record {
 # Hypermedia links related to the gpg account key.
 public type GpgAccountKey_links record {|
     # A link to a resource related to this object.
-    Link_2 self?;
+    Link_1 self?;
 |};
 
 # The development of the effective repo branching model.
@@ -529,15 +519,15 @@ public type EffectiveRepoBranchingModel_development record {|
     # Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
     @jsondata:Name {value: "use_mainbranch"}
     boolean useMainbranch;
-    # The branch of the effective repo branching model development.
+    # The branch used as the development branch.
     Branch branch?;
 |};
 
 # A pullrequest task update
 public type PullrequestTaskUpdate record {|
-    # The state of the pullrequest task update.
+    # The state of the pullrequest task update
     "RESOLVED"|"UNRESOLVED" state?;
-    # The content of the pullrequest task update.
+    # task raw content
     TaskRawContent content?;
 |};
 
@@ -551,12 +541,13 @@ public type RunPipelineQueries record {
     boolean mergeDefaults = false;
 };
 
+# Hypermedia links related to the ref
 public type RefLinks record {|
-    # The self of the ref links.
+    # A link to a resource related to this object
     Link self?;
-    # The commits of the ref links.
+    # A link to a resource related to this object
     Link commits?;
-    # The html of the ref links.
+    # A link to a resource related to this object
     Link html?;
 |};
 
@@ -650,7 +641,7 @@ public type PaginatedWorkspaceAccess record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of workspace access objects in this page of results.
+    # List of workspace access objects in this page of results
     WorkspaceAccess[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -664,7 +655,7 @@ public type PaginatedWorkspaceAccess record {|
 public type Ref record {
     # Discriminator that identifies the type of this object.
     string 'type;
-    # Hypermedia links related to the ref.
+    # Hypermedia links related to the ref
     RefLinks links?;
     # The name of the ref.
     string name?;
@@ -870,7 +861,7 @@ public type PaginatedSnippetCommit record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of snippet commit objects in this page of results.
+    # List of snippet commit objects in this page of results
     SnippetCommit[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -889,7 +880,7 @@ public type PaginatedProjects record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of project objects in this page of results.
+    # List of project objects in this page of results
     Project[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -909,7 +900,7 @@ public type PipelinesPipelineLinks record {
 
 public type PullrequestTask record {
     *Task;
-    # Hypermedia links related to the pullrequest task.
+    # Hypermedia links related to the pullrequest task
     PullrequestTask_links links?;
 };
 
@@ -1020,7 +1011,7 @@ public type PaginatedPullrequestComments record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of pullrequest comment objects in this page of results.
+    # List of pullrequest comment objects in this page of results
     PullrequestComment[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1065,7 +1056,7 @@ public type EffectiveRepoBranchingModel_production record {|
     # Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
     @jsondata:Name {value: "use_mainbranch"}
     boolean useMainbranch;
-    # The branch of the effective repo branching model production.
+    # The branch used as the production branch.
     Branch branch?;
 |};
 
@@ -1122,20 +1113,20 @@ public type PipelineRunner record {
 };
 
 public type SearchResultPage record {
-    # URL of the next page of results, if any.
+    # URL of the next page of results, if any
     string next?;
-    # Total number of items in the collection, when known.
+    # Total number of items in the collection, when known
     int size?;
-    # URL of the previous page of results, if any.
+    # URL of the previous page of results, if any
     string previous?;
-    # Indicates whether the search result page has query substituted.
+    # Indicates whether the search result page has query substituted
     @jsondata:Name {value: "query_substituted"}
     boolean querySubstituted?;
-    # List of search code search result objects in this page of results.
+    # List of search code search result objects in this page of results
     SearchCodeSearchResult[] values?;
-    # Current page number.
+    # Current page number
     int:Signed32 page?;
-    # Number of items per page.
+    # Number of items per page
     int:Signed32 pagelen?;
 };
 
@@ -1158,7 +1149,7 @@ public type PipelineSchedulePostRequestBody record {
     string cron_pattern;
 };
 
-# The reason of the pullrequest rendered.
+# Pull request text in its raw form, its markup language and its rendered HTML.
 public type RenderedPullRequestMarkup_reason record {|
     # The type of markup language the raw content is to be interpreted in.
     "markdown"|"creole"|"plaintext" markup?;
@@ -1231,7 +1222,7 @@ public type PaginatedWorkspaceMemberships record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of workspace membership objects in this page of results.
+    # List of workspace membership objects in this page of results
     WorkspaceMembership[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1250,7 +1241,7 @@ public type PaginatedAccounts record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of account objects in this page of results.
+    # List of account objects in this page of results
     Account[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1262,7 +1253,7 @@ public type PaginatedAccounts record {|
 
 public type PullrequestCommentTask record {
     *PullrequestTask;
-    # The comment of the pullrequest comment task.
+    # The comment of the pullrequest comment task
     Comment comment?;
 };
 
@@ -1358,7 +1349,7 @@ public type PaginatedHookEvents record {|
     int size?;
     # Link to previous page if it exists. A collection's first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of hook event objects in this page of results.
+    # List of hook event objects in this page of results
     HookEvent[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1399,7 +1390,7 @@ public type BranchingModel_development record {|
     # Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
     @jsondata:Name {value: "use_mainbranch"}
     boolean useMainbranch;
-    # The branch of the branching model development.
+    # The branch used as the development branch.
     Branch branch?;
 |};
 
@@ -1438,7 +1429,7 @@ public type PaginatedProjectDeployKeys record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of project deploy key objects in this page of results.
+    # List of project deploy key objects in this page of results
     ProjectDeployKey[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1451,11 +1442,12 @@ public type PaginatedProjectDeployKeys record {|
 # Hypermedia links related to the ssh key.
 public type SshKey_links record {|
     # A link to a resource related to this object.
-    Link_8 self?;
+    Link_1 self?;
 |};
 
+# The commit of the pullrequest endpoint
 public type PullRequestCommit record {|
-    # The hash of the pull request commit.
+    # The hash of the commit
     @constraint:String {pattern: re `[0-9a-f]{7,}?`}
     string hash?;
 |};
@@ -1531,8 +1523,9 @@ public type Branch record {
     string default_merge_strategy?;
 };
 
+# Hypermedia links related to the permission
 public type ProjectGroupPermissionLinks record {|
-    # The self of the project group permission links.
+    # A link to a resource related to this object
     Link self?;
 |};
 
@@ -1553,8 +1546,9 @@ public type OAuth2RefreshTokenGrantConfig record {|
     string refreshUrl = "https://bitbucket.org/site/oauth2/access_token";
 |};
 
+# Event types available for this subject type
 public type SubjectTypesRepository record {|
-    # Hypermedia links related to the subject types repository.
+    # Links to the event types of this subject type
     SubjectTypesRepositoryLinks links?;
 |};
 
@@ -1567,7 +1561,7 @@ public type PaginatedTreeentries record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of treeentry objects in this page of results.
+    # List of treeentry objects in this page of results
     Treeentry[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1579,33 +1573,17 @@ public type PaginatedTreeentries record {|
 
 # User provided pull request text, interpreted in a markup language and rendered in HTML
 public type RenderedPullRequestMarkup record {|
-    # The reason of the pullrequest rendered.
+    # Pull request text in its raw form, its markup language and its rendered HTML.
     RenderedPullRequestMarkup_reason reason?;
-    # The description of the pullrequest rendered.
-    RenderedPullRequestMarkup_description description?;
-    # The title of the pullrequest rendered.
-    RenderedPullRequestMarkup_title title?;
+    # Pull request text in its raw form, its markup language and its rendered HTML.
+    RenderedPullRequestMarkup_reason description?;
+    # Pull request text in its raw form, its markup language and its rendered HTML.
+    RenderedPullRequestMarkup_reason title?;
 |};
 
 public type ProjectPermissionUpdate record {|
-    # The permission level granted on the project permission update.
+    # The permission level granted on the project permission update
     "read"|"write"|"create-repo"|"admin" permission;
-|};
-
-# A link to a resource related to this object.
-public type Link_4 record {|
-    # Name of the project links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_3 record {|
-    # Name of the branch restriction links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
 |};
 
 public type BranchingModel record {
@@ -1649,8 +1627,8 @@ public type Report record {
 };
 
 # A link to a resource related to this object.
-public type Link_2 record {|
-    # Name of the gpg account key links self.
+public type Link_1 record {|
+    # Display name of the linked resource.
     string name?;
     # URL of the linked resource.
     string href?;
@@ -1658,20 +1636,12 @@ public type Link_2 record {|
 
 # A pullrequest task create
 public type PullrequestTaskCreate record {|
-    # Indicates whether the pullrequest task create has pending.
+    # Indicates whether the pullrequest task create has pending
     boolean pending?;
-    # The comment of the pullrequest task create.
+    # The comment of the pullrequest task create
     Comment comment?;
-    # The content of the pullrequest task create.
+    # task raw content
     TaskRawContent content;
-|};
-
-# A link to a resource related to this object.
-public type Link_1 record {|
-    # Name of the project deploy key links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
 |};
 
 # A paginated list of branch restriction rules
@@ -1683,7 +1653,7 @@ public type PaginatedBranchRestrictions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of branch restriction objects in this page of results.
+    # List of branch restriction objects in this page of results
     BranchRestriction[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -1694,7 +1664,7 @@ public type PaginatedBranchRestrictions record {|
 |};
 
 public type RepoPermissionUpdate record {|
-    # The permission level granted on the repo permission update.
+    # The permission level granted on the repo permission update
     "read"|"write"|"admin" permission;
 |};
 
@@ -1705,11 +1675,11 @@ public type PipelineState record {
 # Hypermedia links related to the comment.
 public type Comment_links record {|
     # A link to a resource related to this object.
-    Link_41 code?;
+    Link_1 code?;
     # A link to a resource related to this object.
-    Link_42 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_43 html?;
+    Link_1 html?;
 |};
 
 # A key-value element that will be displayed along with the report
@@ -1721,38 +1691,6 @@ public type ReportData record {
     # The value of the data element
     record {} value?;
 };
-
-# A link to a resource related to this object.
-public type Link_8 record {|
-    # Name of the ssh key links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_7 record {|
-    # Name of the group links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_6 record {|
-    # Name of the group links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_5 record {|
-    # Name of the project links avatar.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
 
 # A paged list of environments
 public type PaginatedEnvironments record {
@@ -1770,22 +1708,6 @@ public type PaginatedEnvironments record {
     int pagelen?;
 };
 
-# A link to a resource related to this object.
-public type Link_9 record {|
-    # Name of the repository links forks.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_45 record {|
-    # Name of the snippet commit links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 public type Account record {
     *GenericObject;
     # Hypermedia links related to the account.
@@ -1798,22 +1720,6 @@ public type Account record {
     string uuid?;
 };
 
-# A link to a resource related to this object.
-public type Link_46 record {|
-    # Name of the snippet commit links diff.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_43 record {|
-    # Name of the comment links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Represents the Queries record for the operation: searchForCodeInWorkspace
 public type SearchForCodeInWorkspaceQueries record {
     # Which page of the search results to retrieve
@@ -1824,40 +1730,6 @@ public type SearchForCodeInWorkspaceQueries record {
     # How many search results to retrieve per page
     int:Signed32 pagelen = 10;
 };
-
-# The title of the pullrequest rendered.
-public type RenderedPullRequestMarkup_title record {|
-    # The type of markup language the raw content is to be interpreted in.
-    "markdown"|"creole"|"plaintext" markup?;
-    # The text as it was typed by a user.
-    string raw?;
-    # The user's content rendered as HTML.
-    string html?;
-|};
-
-# A link to a resource related to this object.
-public type Link_44 record {|
-    # Name of the snippet commit links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_41 record {|
-    # Name of the comment links code.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_42 record {|
-    # Name of the comment links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
 
 # The summary of the base commit.
 public type BaseCommit_summary record {|
@@ -1877,30 +1749,22 @@ public type ListPullRequestsThatContainCommitQueries record {
     int:Signed32 pagelen = 30;
 };
 
-# A link to a resource related to this object.
-public type Link_40 record {|
-    # Name of the workspace base links avatar.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Hypermedia links related to the snippet commit.
 public type SnippetCommit_links record {|
     # A link to a resource related to this object.
-    Link_44 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_45 html?;
+    Link_1 html?;
     # A link to a resource related to this object.
-    Link_46 diff?;
+    Link_1 diff?;
 |};
 
 public type PullrequestEndpoint record {|
-    # The commit of the pullrequest endpoint.
+    # The commit of the pullrequest endpoint
     PullRequestCommit 'commit?;
-    # The repository of the pullrequest endpoint.
+    # The repository of the pullrequest endpoint
     Repository repository?;
-    # The branch of the pullrequest endpoint.
+    # The branch of the pullrequest endpoint
     PullRequestBranch branch?;
 |};
 
@@ -1919,14 +1783,6 @@ public type ListRepositoryForksQueries record {
     string sort?;
 };
 
-# A link to a resource related to this object.
-public type Link_49 record {|
-    # Name of the workspace links snippets.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Represents the Queries record for the operation: addNewSshKey
 public type AddNewSshKeyQueries record {
     # The date or date-time of when the key will expire,
@@ -1935,26 +1791,10 @@ public type AddNewSshKeyQueries record {
     string expires_on?;
 };
 
-# A link to a resource related to this object.
-public type Link_47 record {|
-    # Name of the workspace links projects.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_48 record {|
-    # Name of the workspace links repositories.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Hypermedia links related to the workspace membership.
 public type WorkspaceMembership_links record {|
     # A link to a resource related to this object.
-    Link_38 self?;
+    Link_1 self?;
 |};
 
 public type GpgAccountKey record {
@@ -1994,7 +1834,7 @@ public type PaginatedTags record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of tag objects in this page of results.
+    # List of tag objects in this page of results
     Tag[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2029,7 +1869,7 @@ public type PaginatedRepositories record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of repository objects in this page of results.
+    # List of repository objects in this page of results
     Repository[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2042,15 +1882,7 @@ public type PaginatedRepositories record {|
 # Hypermedia links related to the branching model settings.
 public type BranchingModelSettings_links record {|
     # A link to a resource related to this object.
-    Link_26 self?;
-|};
-
-# A link to a resource related to this object.
-public type Link_54 record {|
-    # Name of the workspace links avatar.
-    string name?;
-    # URL of the linked resource.
-    string href?;
+    Link_1 self?;
 |};
 
 # A paginated list of deploy keys
@@ -2062,7 +1894,7 @@ public type PaginatedDeployKeys record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of deploy key objects in this page of results.
+    # List of deploy key objects in this page of results
     DeployKey[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2096,64 +1928,32 @@ public type PullrequestComment record {
     boolean pending?;
 };
 
-# A link to a resource related to this object.
-public type Link_52 record {|
-    # Name of the workspace links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_53 record {|
-    # Name of the workspace links owners.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_50 record {|
-    # Name of the workspace links members.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Hypermedia links related to the workspace.
 public type Workspace_links record {|
     # A link to a resource related to this object.
-    Link_47 projects?;
+    Link_1 projects?;
     # A link to a resource related to this object.
-    Link_48 repositories?;
+    Link_1 repositories?;
     # A link to a resource related to this object.
-    Link_49 snippets?;
+    Link_1 snippets?;
     # A link to a resource related to this object.
-    Link_50 members?;
+    Link_1 members?;
     # A link to a resource related to this object.
-    Link_51 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_52 html?;
+    Link_1 html?;
     # A link to a resource related to this object.
-    Link_53 owners?;
+    Link_1 owners?;
     # A link to a resource related to this object.
-    Link_54 avatar?;
-|};
-
-# A link to a resource related to this object.
-public type Link_51 record {|
-    # Name of the workspace links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
+    Link_1 avatar?;
 |};
 
 # The collection of checks that determine whether the specified pull request can be merged. Every check has a `type` identifying its shape - see `pullrequest_state_check`, `current_user_permission_check`, `git_mergeability_check`, `standard_merge_check`, `custom_merge_check`, and `merge_queue_check` for what each type covers
 public type PullrequestMergeabilityChecks record {|
-    # Total number of items in the collection, when known.
+    # Total number of items in the collection, when known
     @constraint:Int {minValue: 0}
     int size?;
-    # List of pullrequest mergeability check objects in this page of results.
+    # List of pullrequest mergeability check objects in this page of results
     PullrequestMergeabilityCheck[] values;
 |};
 
@@ -2178,9 +1978,9 @@ public type GetSnippetChangesBetweenVersionsQueries record {
 # Hypermedia links related to the workspace base.
 public type WorkspaceBase_links record {|
     # A link to a resource related to this object.
-    Link_39 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_40 avatar?;
+    Link_1 avatar?;
 |};
 
 # A paginated list of repository user permissions
@@ -2192,7 +1992,7 @@ public type PaginatedRepositoryUserPermissions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of repository user permission objects in this page of results.
+    # List of repository user permission objects in this page of results
     RepositoryUserPermission[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2229,30 +2029,30 @@ public type ListWorkspacesForCurrentUserQueries record {
 # Hypermedia links related to the branch restriction.
 public type BranchRestriction_links record {|
     # A link to a resource related to this object.
-    Link_3 self?;
+    Link_1 self?;
 |};
 
 # A link to a resource related to this object
 public type Link1 record {|
-    # Name of the link1.
+    # Name of the link
     string name?;
-    # URL of the linked resource.
+    # URL of the linked resource
     string href?;
 |};
 
 public type SearchCodeSearchResult record {
-    # The file of the search code search result.
+    # The file of the search code search result
     CommitFile file?;
-    # List of content matches of the search code search result.
+    # List of content matches of the search code search result
     @jsondata:Name {value: "content_matches"}
     SearchContentMatch[] contentMatches?;
-    # Numeric content match count of the search code search result.
+    # Numeric content match count of the search code search result
     @jsondata:Name {value: "content_match_count"}
     int contentMatchCount?;
-    # List of path matches of the search code search result.
+    # List of path matches of the search code search result
     @jsondata:Name {value: "path_matches"}
     SearchSegment[] pathMatches?;
-    # Discriminator that identifies the type of this object.
+    # Discriminator that identifies the type of this object
     string 'type?;
 };
 
@@ -2267,78 +2067,30 @@ public type ApiKeysConfig record {|
     string authorization;
 |};
 
-# A link to a resource related to this object.
-public type Link_23 record {|
-    # Name of the snippet comment links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_24 record {|
-    # Name of the pullrequest task links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_21 record {|
-    # Name of the deploy key links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_22 record {|
-    # Name of the snippet comment links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_20 record {|
-    # Name of the commitstatus links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Hypermedia links related to the pullrequest.
 public type Pullrequest_links record {|
     # A link to a resource related to this object.
-    Link_27 comments?;
+    Link_1 comments?;
     # A link to a resource related to this object.
-    Link_28 activity?;
+    Link_1 activity?;
     # A link to a resource related to this object.
-    Link_29 approve?;
+    Link_1 approve?;
     # A link to a resource related to this object.
-    Link_30 merge?;
+    Link_1 merge?;
     # A link to a resource related to this object.
-    Link_31 decline?;
+    Link_1 decline?;
     # A link to a resource related to this object.
-    Link_32 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_33 commits?;
+    Link_1 commits?;
     # A link to a resource related to this object.
-    Link_34 html?;
+    Link_1 html?;
     # A link to a resource related to this object.
-    Link_35 diff?;
+    Link_1 diff?;
     # A link to a resource related to this object.
-    Link_36 mergeability_checks?;
+    Link_1 mergeability_checks?;
     # A link to a resource related to this object.
-    Link_37 diffstat?;
-|};
-
-# A link to a resource related to this object.
-public type Link_29 record {|
-    # Name of the pullrequest links approve.
-    string name?;
-    # URL of the linked resource.
-    string href?;
+    Link_1 diffstat?;
 |};
 
 # A paginated list of project group permissions
@@ -2350,7 +2102,7 @@ public type PaginatedProjectGroupPermissions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of project group permission objects in this page of results.
+    # List of project group permission objects in this page of results
     ProjectGroupPermission[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2360,43 +2112,11 @@ public type PaginatedProjectGroupPermissions record {|
     int pagelen?;
 |};
 
-# A link to a resource related to this object.
-public type Link_27 record {|
-    # Name of the pullrequest links comments.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Represents the Queries record for the operation: listSnippetsInWorkspace
 public type ListSnippetsInWorkspaceQueries record {
     # Filter down the result based on the authenticated user's role (`owner`, `contributor`, or `member`)
     "owner"|"contributor"|"member" role?;
 };
-
-# A link to a resource related to this object.
-public type Link_28 record {|
-    # Name of the pullrequest links activity.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_25 record {|
-    # Name of the pullrequest task links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_26 record {|
-    # Name of the branching model settings links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
 
 # A user's direct permission for a given repository
 public type RepositoryUserPermission record {
@@ -2408,7 +2128,7 @@ public type RepositoryUserPermission record {
     User user?;
     # The repository of the repository user permission.
     Repository repository?;
-    # Hypermedia links related to the repository user permission.
+    # Hypermedia links related to the permission
     ProjectGroupPermissionLinks links?;
 };
 
@@ -2455,7 +2175,7 @@ public type BranchingModel_production record {|
     # Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
     @jsondata:Name {value: "use_mainbranch"}
     boolean useMainbranch;
-    # The branch of the branching model production.
+    # The branch used as the production branch.
     Branch branch?;
 |};
 
@@ -2468,7 +2188,7 @@ public type PaginatedDiffstats record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of diffstat objects in this page of results.
+    # List of diffstat objects in this page of results
     Diffstat[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2478,8 +2198,9 @@ public type PaginatedDiffstats record {|
     int pagelen?;
 |};
 
+# Links to the event types of this subject type
 public type SubjectTypesRepositoryLinks record {|
-    # The events of the subject types repository links.
+    # A link to a resource related to this object
     Link events?;
 |};
 
@@ -2504,7 +2225,7 @@ public type PaginatedRepositoryPermissions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of repository permission objects in this page of results.
+    # List of repository permission objects in this page of results
     RepositoryPermission[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2535,22 +2256,6 @@ public type BranchingModelSettings_branch_types record {|
     boolean enabled?;
 |};
 
-# A link to a resource related to this object.
-public type Link_34 record {|
-    # Name of the pullrequest links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_35 record {|
-    # Name of the pullrequest links diff.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Represents the Queries record for the operation: listBranchRestrictions
 public type ListBranchRestrictionsQueries record {
     # Branch restrictions of this type
@@ -2559,51 +2264,19 @@ public type ListBranchRestrictionsQueries record {
     string pattern?;
 };
 
-# A link to a resource related to this object.
-public type Link_32 record {|
-    # Name of the pullrequest links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_33 record {|
-    # Name of the pullrequest links commits.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_30 record {|
-    # Name of the pullrequest links merge.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_31 record {|
-    # Name of the pullrequest links decline.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Hypermedia links related to the group.
 public type Group_links record {|
     # A link to a resource related to this object.
-    Link_6 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_7 html?;
+    Link_1 html?;
 |};
 
 # A group's permission for a given repository
 public type RepositoryGroupPermission record {
     # Discriminator that identifies the type of this object.
     string 'type;
-    # Hypermedia links related to the repository group permission.
+    # Hypermedia links related to the permission
     ProjectGroupPermissionLinks links?;
     # The permission level granted on the repository group permission.
     "read"|"write"|"admin"|"none" permission?;
@@ -2617,14 +2290,6 @@ public type RepositoryGroupPermission record {
 public type TaskRawContent record {|
     # The task contents
     string raw;
-|};
-
-# A link to a resource related to this object.
-public type Link_38 record {|
-    # Name of the workspace membership links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
 |};
 
 # A paged list of deployments
@@ -2642,30 +2307,6 @@ public type PaginatedDeployments record {
     # Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values
     int pagelen?;
 };
-
-# A link to a resource related to this object.
-public type Link_39 record {|
-    # Name of the workspace base links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_36 record {|
-    # Name of the pullrequest links mergeability checks.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_37 record {|
-    # Name of the pullrequest links diffstat.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
 
 public type Pipeline record {
     *GenericObject;
@@ -2700,7 +2341,7 @@ public type Pipeline record {
 # Hypermedia links related to the deploy key.
 public type DeployKey_links record {|
     # A link to a resource related to this object.
-    Link_21 self?;
+    Link_1 self?;
 |};
 
 # A paginated list of webhook subscriptions
@@ -2712,7 +2353,7 @@ public type PaginatedWebhookSubscriptions record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of webhook subscription objects in this page of results.
+    # List of webhook subscription objects in this page of results
     WebhookSubscription[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2794,7 +2435,7 @@ public type PaginatedBranches record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of branch objects in this page of results.
+    # List of branch objects in this page of results
     Branch[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2806,27 +2447,27 @@ public type PaginatedBranches record {|
 
 # A task object
 public type Task record {|
-    # Timestamp of the updated on of the task.
+    # Timestamp of the updated on of the task
     @jsondata:Name {value: "updated_on"}
     string updatedOn;
-    # The creator of the task.
+    # The creator of the task
     Account creator;
-    # The resolved by of the task.
+    # The resolved by of the task
     @jsondata:Name {value: "resolved_by"}
     Account resolvedBy?;
-    # Timestamp of the created on of the task.
+    # Timestamp of the created on of the task
     @jsondata:Name {value: "created_on"}
     string createdOn;
-    # Indicates whether the task has pending.
+    # Indicates whether the task has pending
     boolean pending?;
     # The ISO8601 timestamp for when the task was resolved
     @jsondata:Name {value: "resolved_on"}
     string resolvedOn?;
-    # Unique numeric identifier of the task.
+    # Unique numeric identifier of the task
     int id?;
-    # The state of the task.
+    # The state of the task
     "RESOLVED"|"UNRESOLVED" state;
-    # The content of the task.
+    # The content of the task
     TaskContent content;
 |};
 
@@ -2914,7 +2555,7 @@ public type PaginatedDefaultReviewerAndType record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of default reviewer and type objects in this page of results.
+    # List of default reviewer and type objects in this page of results
     DefaultReviewerAndType[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2933,7 +2574,7 @@ public type PaginatedFiles record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of commit file objects in this page of results.
+    # List of commit file objects in this page of results
     CommitFile[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -2946,9 +2587,9 @@ public type PaginatedFiles record {|
 # Hypermedia links related to the commitstatus.
 public type Commitstatus_links record {|
     # A link to a resource related to this object.
-    Link_19 'commit?;
+    Link_1 'commit?;
     # A link to a resource related to this object.
-    Link_20 self?;
+    Link_1 self?;
 |};
 
 # Represents the Queries record for the operation: mergePullRequest
@@ -3005,7 +2646,7 @@ public type PaginatedCommitComments record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of commit comment objects in this page of results.
+    # List of commit comment objects in this page of results
     CommitComment[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -3043,60 +2684,28 @@ public type ListTasksOnPullRequestQueries record {
     int pagelen?;
 };
 
-# A link to a resource related to this object.
-public type Link_12 record {|
-    # Name of the repository links self.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_13 record {|
-    # Name of the repository links commits.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_10 record {|
-    # Name of the repository links downloads.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_11 record {|
-    # Name of the repository links clone.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
 # Hypermedia links related to the repository.
 public type Repository_links record {|
     # A link to a resource related to this object.
-    Link_9 forks?;
+    Link_1 forks?;
     # A link to a resource related to this object.
-    Link_10 downloads?;
-    # List of clone of the repository links.
-    Link_11[] clone?;
+    Link_1 downloads?;
+    # Clone URLs of the repository, one per protocol.
+    Link_1[] clone?;
     # A link to a resource related to this object.
-    Link_12 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_13 commits?;
+    Link_1 commits?;
     # A link to a resource related to this object.
-    Link_14 watchers?;
+    Link_1 watchers?;
     # A link to a resource related to this object.
-    Link_15 html?;
+    Link_1 html?;
     # A link to a resource related to this object.
-    Link_16 avatar?;
+    Link_1 avatar?;
     # A link to a resource related to this object.
-    Link_17 hooks?;
+    Link_1 hooks?;
     # A link to a resource related to this object.
-    Link_18 pullrequests?;
+    Link_1 pullrequests?;
 |};
 
 public type PipelineScheduleExecution record {
@@ -3129,33 +2738,17 @@ public type PipelineSchedule record {
 
 # The merge commit of the pullrequest.
 public type PullRequestCommit_1 record {|
-    # The hash of the pullrequest merge commit.
+    # The hash of the merge commit.
     @constraint:String {pattern: re `[0-9a-f]{7,}?`}
     string hash?;
 |};
 
 public type SearchLine record {
-    # Numeric line of the search line.
+    # Numeric line of the search line
     int:Signed32 line?;
-    # List of segments of the search line.
+    # List of segments of the search line
     SearchSegment[] segments?;
 };
-
-# A link to a resource related to this object.
-public type Link_18 record {|
-    # Name of the repository links pullrequests.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_19 record {|
-    # Name of the commitstatus links commit.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
 
 # A paginated list of commits
 public type PaginatedChangeset record {|
@@ -3166,7 +2759,7 @@ public type PaginatedChangeset record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of base commit objects in this page of results.
+    # List of base commit objects in this page of results
     BaseCommit[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -3176,27 +2769,12 @@ public type PaginatedChangeset record {|
     int pagelen?;
 |};
 
-# A link to a resource related to this object.
-public type Link_16 record {|
-    # Name of the repository links avatar.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_17 record {|
-    # Name of the repository links hooks.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
+# The branch of the pullrequest endpoint
 public type PullRequestBranch record {|
     # The default merge strategy, when this endpoint is the destination of the pull request
     @jsondata:Name {value: "default_merge_strategy"}
     string defaultMergeStrategy?;
-    # Name of the pull request branch.
+    # The name of the branch
     string name?;
     # Available merge strategies, when this endpoint is the destination of the pull request
     @jsondata:Name {value: "merge_strategies"}
@@ -3208,22 +2786,6 @@ public type PipelineSchedulePutRequestBody record {
     # Whether the schedule is enabled.
     boolean enabled?;
 };
-
-# A link to a resource related to this object.
-public type Link_14 record {|
-    # Name of the repository links watchers.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
-
-# A link to a resource related to this object.
-public type Link_15 record {|
-    # Name of the repository links html.
-    string name?;
-    # URL of the linked resource.
-    string href?;
-|};
 
 # Represents the Queries record for the operation: listPullRequestMergeabilityChecks
 public type ListPullRequestMergeabilityChecksQueries record {
@@ -3246,14 +2808,14 @@ public type BranchingModelSettings record {
 # Hypermedia links related to the project.
 public type Project_links record {|
     # A link to a resource related to this object.
-    Link_4 html?;
+    Link_1 html?;
     # A link to a resource related to this object.
-    Link_5 avatar?;
+    Link_1 avatar?;
 |};
 
 public type PipelinesLinksSectionHref record {
     *GenericObject;
-    # A link
+    # URL of the linked resource.
     string href?;
 };
 
@@ -3265,6 +2827,7 @@ public type PipelineSelector record {
     string pattern?;
 };
 
+# The content of the task
 public type TaskContent record {|
     # The type of markup language the raw content is to be interpreted in
     "markdown"|"creole"|"plaintext" markup?;
@@ -3340,7 +2903,7 @@ public type PaginatedGpgUserKeys record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of gpg account key objects in this page of results.
+    # List of gpg account key objects in this page of results
     GpgAccountKey[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -3388,7 +2951,7 @@ public type PaginatedSnippets record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of snippet objects in this page of results.
+    # List of snippet objects in this page of results
     Snippet[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -3398,12 +2961,12 @@ public type PaginatedSnippets record {|
     int pagelen?;
 |};
 
-# Hypermedia links related to the pullrequest task.
+# Hypermedia links related to the pullrequest task
 public type PullrequestTask_links record {|
     # A link to a resource related to this object.
-    Link_24 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_25 html?;
+    Link_1 html?;
 |};
 
 # Represents the Queries record for the operation: listCommitComments
@@ -3485,9 +3048,9 @@ public type SshAccountKey record {
 # Hypermedia links related to the snippet comment.
 public type SnippetComment_links record {|
     # A link to a resource related to this object.
-    Link_22 self?;
+    Link_1 self?;
     # A link to a resource related to this object.
-    Link_23 html?;
+    Link_1 html?;
 |};
 
 public type Comment record {
@@ -3607,7 +3170,7 @@ public type PaginatedTasks record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of pullrequest comment task objects in this page of results.
+    # List of pullrequest comment task objects in this page of results
     PullrequestCommentTask[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -3652,7 +3215,7 @@ public type SnippetCommit record {
 public type ProjectGroupPermission record {
     # Discriminator that identifies the type of this object.
     string 'type;
-    # Hypermedia links related to the project group permission.
+    # Hypermedia links related to the permission
     ProjectGroupPermissionLinks links?;
     # The permission level granted on the project group permission.
     "read"|"write"|"create-repo"|"admin"|"none" permission?;
@@ -3663,9 +3226,9 @@ public type ProjectGroupPermission record {
 };
 
 public type SearchSegment record {
-    # Indicates whether the search segment has match.
+    # Indicates whether the search segment has match
     boolean 'match?;
-    # The text of the search segment.
+    # The text of the search segment
     string text?;
 };
 
@@ -3697,9 +3260,9 @@ public type BaseCommit record {
 
 # The mapping of resource/subject types pointing to their individual event types
 public type SubjectTypes record {|
-    # The workspace of the subject types.
+    # Event types available for this subject type
     SubjectTypesRepository workspace?;
-    # The repository of the subject types.
+    # Event types available for this subject type
     SubjectTypesRepository repository?;
 |};
 
@@ -3735,7 +3298,7 @@ public type PaginatedRefs record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of ref objects in this page of results.
+    # List of ref objects in this page of results
     Ref[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
@@ -3782,7 +3345,7 @@ public type PaginatedFileConflicts record {|
     int size?;
     # Link to previous page if it exists. A collections first page does not have this value. This is an optional element that is not provided in all responses. Some result sets strictly support forward navigation and never provide previous links. Clients must anticipate that backwards navigation is not always available. Use this link to navigate the result set and refrain from constructing your own URLs
     string previous?;
-    # List of file conflict objects in this page of results.
+    # List of file conflict objects in this page of results
     FileConflict[] values?;
     # Page number of the current results. This is an optional element that is not provided in all responses
     @constraint:Int {minValue: 1}
