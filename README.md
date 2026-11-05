@@ -3,26 +3,59 @@
 [![Build](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/ci.yml)
 [![Trivy](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/trivy-scan.yml)
 [![GraalVM Check](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/build-with-bal-test-graalvm.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/build-with-bal-test-graalvm.yml)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-bitbucket.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/commits/master)
-[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/bitbucket.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%bitbucket)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-bitbucket.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/commits/main)
+[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/bitbucket.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fbitbucket)
 
 ## Overview
 
-[//]: # (TODO: Add overview mentioning the purpose of the module, supported REST API versions, and other high-level details.)
+The Bitbucket connector lets Ballerina integrations work with [Bitbucket Cloud](https://bitbucket.org/), Atlassian's Git repository hosting and collaboration service, through version 2.0 of its REST API. It covers the API's full operation surface, including repositories, branches and tags, commits, pull requests, pipelines, snippets, projects, workspaces and permissions, so that source-control and CI/CD workflows can be automated from a Ballerina program.
 
 ## Setup guide
 
-[//]: # (TODO: Add detailed steps to obtain credentials and configure the module.)
+To use the connector you need a Bitbucket Cloud account and one of the supported credentials.
+
+1. Sign in to [Bitbucket Cloud](https://bitbucket.org/) and open the workspace, project or repository you want to automate.
+2. Create an access token. Open the repository (or workspace) **Settings**, choose **Access tokens** and create a token with the scopes your integration needs, such as repository read and write, and pull request read and write.
+3. Copy the token. It is shown only once.
+4. Alternatively, use basic authentication with your Atlassian account email and an API token created under **Atlassian account settings > Security > API tokens**, or an OAuth 2.0 consumer created under **Workspace settings > OAuth consumers**.
+5. Keep the credentials in a `Config.toml` file next to your program and never commit them to source control.
 
 ## Quickstart
 
-[//]: # (TODO: Add a quickstart guide to demonstrate a basic functionality of the module, including sample code snippets.)
+1. Import the connector.
+
+    ```ballerina
+    import ballerinax/bitbucket;
+    ```
+
+2. Add the credentials to `Config.toml`.
+
+    ```toml
+    accessToken = "<your-access-token>"
+    ```
+
+3. Create the client.
+
+    ```ballerina
+    configurable string accessToken = ?;
+
+    bitbucket:Client bitbucketClient = check new ({auth: {token: accessToken}});
+    ```
+
+4. Call an operation, for example fetch the authenticated user, and run the program with `bal run`.
+
+    ```ballerina
+    public function main() returns error? {
+        bitbucket:Account _ = check bitbucketClient->getCurrentUser();
+    }
+    ```
 
 ## Examples
 
-The `Bitbucket` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-bitbucket/tree/main/examples/), covering the following use cases:
+The `Bitbucket` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-bitbucket/tree/main/examples/), covering the following use cases:
 
-[//]: # (TODO: Add examples)
+* [pull_request_review_flow](examples/pull_request_review_flow/pull_request_review_flow.md) - Review the open pull requests of a repository, then approve and merge one.
+* [release_tag_publishing](examples/release_tag_publishing/release_tag_publishing.md) - Tag the latest commit of a repository as a release and list the repository tags.
 
 ## Build from the source
 
