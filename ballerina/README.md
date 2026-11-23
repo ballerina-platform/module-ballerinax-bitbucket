@@ -1,11 +1,3 @@
-# Ballerina Bitbucket connector
-
-[![Build](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/ci.yml)
-[![Trivy](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/trivy-scan.yml)
-[![GraalVM Check](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/build-with-bal-test-graalvm.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/actions/workflows/build-with-bal-test-graalvm.yml)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-bitbucket.svg)](https://github.com/ballerina-platform/module-ballerinax-bitbucket/commits/main)
-[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/bitbucket.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fbitbucket)
-
 ## Overview
 
 The Bitbucket connector lets Ballerina integrations work with [Bitbucket Cloud](https://bitbucket.org/), Atlassian's Git repository hosting and collaboration service, through version 2.0 of its REST API. It covers the API's full operation surface, including repositories, branches and tags, commits, pull requests, pipelines, snippets, projects, workspaces and permissions, so that source-control and CI/CD workflows can be automated from a Ballerina program.
